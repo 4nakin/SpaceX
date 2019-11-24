@@ -15,12 +15,12 @@ data class Launch(
     val launch_success: Boolean,
     val launch_year: String,
     @Embedded val links: Links,
-    val mission_id: List<String>,
+    val mission_id: String,
     val mission_name: String
 )
 data class Links(
     val article_link: String,
-    val flickr_images: List<String>,
+    val flickr_images: String,
     val mission_patch: String,
     val mission_patch_small: String,
     val presskit: String,
@@ -50,14 +50,14 @@ fun List<Launch>.asDomainModels():List<team.lf.spacex.domain.Launch>{
             it.launch_success,
             team.lf.spacex.domain.Links(
                 it.links.article_link,
-                it.links.flickr_images,
+                it.links.flickr_images.split(","),
                 it.links.mission_patch,
                 it.links.mission_patch_small,
                 it.links.reddit_campaign,
                 it.links.video_link,
                 it.links.wikipedia
             ),
-            it.mission_id,
+            it.mission_id.split(","),
             it.mission_name
         )
     }

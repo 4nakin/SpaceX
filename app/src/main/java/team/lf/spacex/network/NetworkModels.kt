@@ -152,7 +152,7 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.database.Launch> {
             launch_date_utc = it.launch_date_utc ?: "",
             launch_success = it.launch_success ?: false,
             launch_year = it.launch_year ?: "",
-            mission_id = it.mission_id ?: listOf(""),
+            mission_id = it.mission_id?.joinToString()?:"",
             mission_name = it.mission_name ?: "",
             launch_site = team.lf.spacex.database.LaunchSite(
                 it.launch_site?.site_id?:"",
@@ -161,7 +161,7 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.database.Launch> {
             ),
             links = team.lf.spacex.database.Links(
                 article_link = it.links.article_link?:"",
-                flickr_images = it.links.flickr_images?: listOf(""),
+                flickr_images = it.links.flickr_images?.joinToString()?:"",
                 mission_patch = it.links.mission_patch?:"",
                 mission_patch_small = it.links.mission_patch_small?:"",
                 presskit = it.links.presskit?:"",
