@@ -1,14 +1,17 @@
 package team.lf.spacex.database
 
 import android.content.Context
-import androidx.room.Dao
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 
 @Dao
 interface SpaceXDao{
+    @Query("select * from launches")
+    fun getAllLaunches():LiveData<List<Launch>>
+
+    @Insert
+    fun insertAll(launches: List<Launch>)
 
 }
 
