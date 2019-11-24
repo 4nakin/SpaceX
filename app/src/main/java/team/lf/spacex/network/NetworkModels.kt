@@ -12,10 +12,10 @@ data class Launch(
     val launch_success: Boolean?,
     val launch_window: Int?,
     val launch_year: String?,
-    val links: Links?,
+    val links: Links,
     val mission_id: List<String>?,
     val mission_name: String?,
-    val rocket: Rocket?,
+    val rocket: Rocket,
     val ships: List<String>?,
     val static_fire_date_unix: Int?,
     val static_fire_date_utc: String?,
@@ -141,3 +141,37 @@ data class Timeline(
     val stage_sep: Int?,
     val webcast_liftoff: Int?
 )
+
+fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.database.Launch> {
+    return map {
+        team.lf.spacex.database.Launch(
+            details = it.details ?: "",
+            flight_number = it.flight_number ?: -1,
+            launch_date_local = it.launch_date_local ?: "",
+            launch_date_unix = it.launch_date_unix ?: -1,
+            launch_date_utc = it.launch_date_utc ?: "",
+            launch_success = it.launch_success ?: false,
+            launch_year = it.launch_year ?: "",
+            mission_id = it.mission_id ?: listOf(""),
+            mission_name = it.mission_name ?: "",
+            launch_site = team.lf.spacex.database.LaunchSite(
+                it.launch_site?.site_id?:"",
+                it.launch_site?.site_name?:"",
+                it.launch_site?.site_name_long?:""
+            ),
+            links = team.lf.spacex.database.Links(
+                article_link = it.links.article_link?:"",
+                flickr_images = it.links.flickr_images?: listOf(""),
+                mission_patch = it.links.mission_patch?:"",
+                mission_patch_small = it.links.mission_patch_small?:"",
+                presskit = it.links.presskit?:"",
+                reddit_campaign = it.links.reddit_campaign?:"",
+                reddit_launch = it.links.reddit_launch?:"",
+                reddit_media = it.links.reddit_media?:"",
+                video_link = it.links.video_link?:"",
+                wikipedia = it.links.wikipedia?:"",
+                youtube_id = it.links.youtube_id?:""
+            )
+        )
+    }
+}
