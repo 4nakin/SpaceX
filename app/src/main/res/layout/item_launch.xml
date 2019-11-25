@@ -25,17 +25,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/patch_small"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                imageUrl="@{launch.links.mission_patch_small}"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/patch_small"
-                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flight_number"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -43,9 +46,12 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/flight_number"
-                app:layout_constraintTop_toTopOf="@+id/flight_number"
+                app:shortMissionName="@{launch.mission_name}"
+                app:layout_constraintBottom_toTopOf="@+id/launch_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mission Name" />
 
             <TextView
@@ -53,9 +59,10 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{launch.flight_number}"
+                app:layout_constraintStart_toEndOf="@+id/fn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="111" />
 
@@ -64,8 +71,10 @@
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/flight_number"
-                app:layout_constraintTop_toBottomOf="@+id/flight_number"
+                app:layout_constraintBottom_toTopOf="@+id/details_header"
+                app:layout_constraintEnd_toEndOf="@+id/mission_name"
+                app:layout_constraintTop_toBottomOf="@+id/mission_name"
+                app:unixToDate="@{launch.launch_date_unix}"
                 tools:text="@tools:sample/date/ddmmyy" />
 
             <TextView
@@ -73,14 +82,36 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
+                android:textAlignment="viewEnd"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/flight_number"
+                app:layout_constraintEnd_toEndOf="@+id/details_header"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/patch_small"
-                app:layout_constraintTop_toBottomOf="@+id/launch_date"
+                app:layout_constraintTop_toBottomOf="@+id/details_header"
+                app:shortDetails="@{launch.details}"
                 tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/details_header"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/details_header"
+                app:layout_constraintBottom_toTopOf="@+id/details"
+                app:layout_constraintEnd_toEndOf="@+id/launch_date"
+                app:layout_constraintTop_toBottomOf="@+id/launch_date" />
+
+            <TextView
+                android:id="@+id/fn"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_number_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/flight_number"
+                app:layout_constraintStart_toStartOf="@+id/patch_small" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

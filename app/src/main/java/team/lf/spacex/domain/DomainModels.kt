@@ -6,8 +6,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Launch(
     val details: String,
-    val flight_number: Int,
+    val flight_number: String,
     val launch_date_utc: String,
+    val launch_date_unix: String,
     val launch_site: LaunchSite,
     val launch_success: Boolean,
     val links: Links,

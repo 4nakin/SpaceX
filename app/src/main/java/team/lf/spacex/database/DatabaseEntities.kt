@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "launches")
 data class Launch(
     val details: String,
-    @PrimaryKey val flight_number: Int,
+    @PrimaryKey val flight_number: String,
     val launch_date_local: String,
-    val launch_date_unix: Int,
+    val launch_date_unix: String,
     val launch_date_utc: String,
     @Embedded val launch_site: LaunchSite,
     val launch_success: Boolean,
@@ -43,6 +43,7 @@ fun List<Launch>.asDomainModels():List<team.lf.spacex.domain.Launch>{
             it.details,
             it.flight_number,
             it.launch_date_utc,
+            it.launch_date_unix,
             team.lf.spacex.domain.LaunchSite(
                 it.launch_site.site_name,
                 it.launch_site.site_name_long

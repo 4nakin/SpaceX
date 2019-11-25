@@ -2,4 +2,6 @@
     <string name="app_name">SpaceX</string>
     <string name="patch_small">Patch Small</string>
     <string name="all_launches_header_text">All launches: </string>
+    <string name="details_header">Details:</string>
+    <string name="flight_number_label">fl.n.</string>
 </resources>

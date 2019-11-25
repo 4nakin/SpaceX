@@ -1,23 +1,23 @@
 package team.lf.spacex.network
 
 data class Launch(
-    val crew: String?,
+    val crew: List<String>?,
     val details: String?,
-    val flight_number: Int?,
+    val flight_number: String?,
     val is_tentative: Boolean?,
     val launch_date_local: String?,
-    val launch_date_unix: Int?,
+    val launch_date_unix: String?,
     val launch_date_utc: String?,
     val launch_site: LaunchSite?,
     val launch_success: Boolean?,
-    val launch_window: Int?,
+    val launch_window: String?,
     val launch_year: String?,
     val links: Links,
     val mission_id: List<String>?,
     val mission_name: String?,
     val rocket: Rocket,
     val ships: List<String>?,
-    val static_fire_date_unix: Int?,
+    val static_fire_date_unix: String?,
     val static_fire_date_utc: String?,
     val tbd: Boolean?,
     val telemetry: Telemetry?,
@@ -61,9 +61,9 @@ data class FirstStage(
 )
 
 data class Core(
-    val block: Int?,
+    val block: String?,
     val core_serial: String?,
-    val flight: Int?,
+    val flight: String?,
     val gridfins: Boolean?,
     val land_success: Any?,
     val landing_intent: Boolean?,
@@ -74,7 +74,7 @@ data class Core(
 )
 
 data class SecondStage(
-    val block: Int?,
+    val block: String?,
     val payloads: List<Payload>?
 )
 
@@ -82,38 +82,38 @@ data class Payload(
     val cap_serial: String?,
     val cargo_manifest: String?,
     val customers: List<String>?,
-    val flight_time_sec: Int?,
+    val flight_time_sec: String?,
     val manufacturer: String?,
-    val mass_returned_kg: Int?,
-    val mass_returned_lbs: Double?,
+    val mass_returned_kg: String?,
+    val mass_returned_lbs: String?,
     val nationality: String?,
-    val norad_id: List<Int>?,
+    val norad_id: List<String>?,
     val orbit: String?,
     val orbit_params: OrbitParams?,
     val payload_id: String?,
-    val payload_mass_kg: Int?,
-    val payload_mass_lbs: Int?,
+    val payload_mass_kg: String?,
+    val payload_mass_lbs: String?,
     val payload_type: String?,
     val reused: Boolean?,
     val uid: String?
 )
 
 data class OrbitParams(
-    val apoapsis_km: Double?,
-    val arg_of_pericenter: Double?,
-    val eccentricity: Double?,
+    val apoapsis_km: String?,
+    val arg_of_pericenter: String?,
+    val eccentricity: String?,
     val epoch: String?,
-    val inclination_deg: Double?,
+    val inclination_deg: String?,
     val lifespan_years: Any?,
     val longitude: Any?,
-    val mean_anomaly: Double?,
-    val mean_motion: Double?,
-    val periapsis_km: Double?,
-    val period_min: Double?,
-    val raan: Double?,
+    val mean_anomaly: String?,
+    val mean_motion: String?,
+    val periapsis_km: String?,
+    val period_min: String?,
+    val raan: String?,
     val reference_system: String?,
     val regime: String?,
-    val semi_major_axis_km: Double?
+    val semi_major_axis_km: String?
 )
 
 data class Telemetry(
@@ -121,34 +121,34 @@ data class Telemetry(
 )
 
 data class Timeline(
-    val dragon_bay_door_deploy: Int?,
-    val dragon_separation: Int?,
-    val dragon_solar_deploy: Int?,
-    val engine_chill: Int?,
-    val go_for_launch: Int?,
-    val go_for_prop_loading: Int?,
-    val ignition: Int?,
-    val liftoff: Int?,
-    val maxq: Int?,
-    val meco: Int?,
-    val prelaunch_checks: Int?,
-    val propellant_pressurization: Int?,
-    val rp1_loading: Int?,
-    val seco_1: Int?,
-    val second_stage_ignition: Int?,
-    val stage1_lox_loading: Int?,
-    val stage2_lox_loading: Int?,
-    val stage_sep: Int?,
-    val webcast_liftoff: Int?
+    val dragon_bay_door_deploy: String?,
+    val dragon_separation: String?,
+    val dragon_solar_deploy: String?,
+    val engine_chill: String?,
+    val go_for_launch: String?,
+    val go_for_prop_loading: String?,
+    val ignition: String?,
+    val liftoff: String?,
+    val maxq: String?,
+    val meco: String?,
+    val prelaunch_checks: String?,
+    val propellant_pressurization: String?,
+    val rp1_loading: String?,
+    val seco_1: String?,
+    val second_stage_ignition: String?,
+    val stage1_lox_loading: String?,
+    val stage2_lox_loading: String?,
+    val stage_sep: String?,
+    val webcast_liftoff: String?
 )
 
 fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.database.Launch> {
     return map {
         team.lf.spacex.database.Launch(
             details = it.details ?: "",
-            flight_number = it.flight_number ?: -1,
+            flight_number = it.flight_number ?: "",
             launch_date_local = it.launch_date_local ?: "",
-            launch_date_unix = it.launch_date_unix ?: -1,
+            launch_date_unix = it.launch_date_unix ?: "",
             launch_date_utc = it.launch_date_utc ?: "",
             launch_success = it.launch_success ?: false,
             launch_year = it.launch_year ?: "",
