@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SpaceX</string>
     <string name="patch_small">Patch Small</string>
+    <string name="all_launches_header_text">All launches: </string>
 </resources>

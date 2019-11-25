@@ -1,7 +1,8 @@
-package team.lf.spacex
+package team.lf.spacex.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import team.lf.spacex.R
 
 class MainActivity : AppCompatActivity() {
 
