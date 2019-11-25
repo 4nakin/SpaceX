@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SpaceX</string>
+    <string name="patch_small">Patch Small</string>
 </resources>
