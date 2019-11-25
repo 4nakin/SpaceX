@@ -6,34 +6,36 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import team.lf.spacex.R
 import team.lf.spacex.databinding.ItemLaunchBinding
 import team.lf.spacex.domain.Launch
 
-private const val VIEW_TYPE_HEADER = 0
-private const val VIEW_TYPE_LAUNCH = 1
 
 class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
     ListAdapter<Launch, RecyclerView.ViewHolder>(LaunchesDiffCallback()) {
 
-    override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
-            is Launch -> VIEW_TYPE_LAUNCH
-            else -> VIEW_TYPE_HEADER
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    fun submitLaunchListAsync(list: List<Launch>?) {
+        adapterScope.launch {
+            withContext(Dispatchers.Main) {
+                submitList(list)
+            }
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_LAUNCH -> LaunchesViewHolder.from(parent)
-            VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
-            else -> throw ClassCastException("Unknown viewType $viewType")
-        }
+        return LaunchesViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-            is LaunchesViewHolder->{
+        when (holder) {
+            is LaunchesViewHolder -> {
                 val item = getItem(position) as Launch
                 holder.bind(item, clickListener)
             }
@@ -57,18 +59,6 @@ class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
             }
         }
     }
-
-    class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        companion object {
-            fun from(parent: ViewGroup): TextViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.header, parent, false)
-                return TextViewHolder(view)
-            }
-        }
-    }
-
-
 }
 
 
