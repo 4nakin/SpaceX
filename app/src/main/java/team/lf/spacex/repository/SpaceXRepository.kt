@@ -5,6 +5,7 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import team.lf.spacex.database.SpaceXDatabase
+import team.lf.spacex.database.asDomainLaunchModel
 import team.lf.spacex.database.asDomainModels
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.network.SpaceXApi
@@ -18,10 +19,18 @@ class SpaceXRepository(private val database: SpaceXDatabase) {
             it.asDomainModels()
         }
 
+
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
             val allLaunches = SpaceXApi.retrofitService.getLaunchesAsync().await()
             database.SpaceXDao.insertAll(allLaunches.asDatabaseModels())
+        }
+    }
+
+    fun getLaunchByFlightNumberFromDatabase(flightNumber: String)
+            : LiveData<Launch> {
+        return Transformations.map(database.SpaceXDao.getLaunchByFlightNumber(flightNumber)) {
+            it.asDomainLaunchModel()
         }
     }
 
