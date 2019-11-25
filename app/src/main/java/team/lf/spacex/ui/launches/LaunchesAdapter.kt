@@ -28,7 +28,6 @@ class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return LaunchesViewHolder.from(parent)
     }
@@ -42,7 +41,6 @@ class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
         }
     }
 
-
     class LaunchesViewHolder private constructor(private val binding: ItemLaunchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Launch, clickListener: OnLaunchClickListener) {
@@ -50,7 +48,6 @@ class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
-
         companion object {
             fun from(parent: ViewGroup): LaunchesViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

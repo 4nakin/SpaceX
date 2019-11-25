@@ -1,4 +1,8 @@
 package team.lf.spacex.ui.launches
 
-class LaunchesViewModel {
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+
+class LaunchesViewModel(application: Application):AndroidViewModel(application) {
+
 }

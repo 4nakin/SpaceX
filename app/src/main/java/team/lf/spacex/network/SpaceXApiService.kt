@@ -25,6 +25,6 @@ interface SpaceXApiService {
     fun getLaunchesAsync():Deferred<List<Launch>>
 }
 
-object ITunesApi{
+object SpaceXApi{
     val retrofitService: SpaceXApiService by lazy { retrofit.create(SpaceXApiService::class.java) }
 }
