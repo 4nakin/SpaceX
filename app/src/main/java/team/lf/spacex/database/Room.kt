@@ -10,7 +10,7 @@ interface SpaceXDao{
     @Query("select * from launches")
     fun getAllLaunches():LiveData<List<Launch>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(launches: List<Launch>)
 
 }
