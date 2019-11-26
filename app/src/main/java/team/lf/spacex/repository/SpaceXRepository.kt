@@ -9,7 +9,6 @@ import team.lf.spacex.database.asDomainLaunchModel
 import team.lf.spacex.database.asDomainModels
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.network.SpaceXApi
-import team.lf.spacex.network.SpaceXApiService
 import team.lf.spacex.network.asDatabaseModels
 
 class SpaceXRepository(private val database: SpaceXDatabase) {

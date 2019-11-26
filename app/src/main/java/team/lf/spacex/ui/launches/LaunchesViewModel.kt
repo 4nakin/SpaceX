@@ -28,7 +28,7 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun refreshAllLAunchesFromRepository() {
+    fun refreshAllLaunchesFromRepository() {
         viewModelScope.launch {
             try {
                 Timber.d("refreshLaunches")

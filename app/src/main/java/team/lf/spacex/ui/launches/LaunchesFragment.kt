@@ -57,7 +57,7 @@ class LaunchesFragment : Fragment() {
         viewModel.allLaunches.observe(viewLifecycleOwner, Observer {
             launchesAdapter.submitLaunchListAsync(it)
         })
-        viewModel.refreshAllLAunchesFromRepository()
+        viewModel.refreshAllLaunchesFromRepository()
     }
 
     private fun onNetworkError() {
