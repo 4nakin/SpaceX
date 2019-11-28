@@ -38,9 +38,7 @@ class LaunchesFragment : Fragment() {
         )
         binding.lifecycleOwner = viewLifecycleOwner
         launchesAdapter = LaunchesAdapter(OnLaunchClickListener {
-            Toast.makeText(this.activity, it.flight_number, Toast.LENGTH_SHORT).show()
-            Timber.d(it.links.mission_patch_small)
-            findNavController().navigate(LaunchesFragmentDirections.actionLaunchesFragmentToLaunchDetailFragment(it))
+            findNavController().navigate(LaunchesFragmentDirections.actionLaunchesFragmentToViewPagerFragment(it))
         })
         binding.root.findViewById<RecyclerView>(R.id.recycler).apply {
             layoutManager = LinearLayoutManager(activity)
