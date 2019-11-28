@@ -11,20 +11,17 @@
         tools:layout="@layout/fragment_all_launches"
         >
         <action
-            android:id="@+id/action_launchesFragment_to_launchDetailFragment"
-            app:destination="@id/launchDetailFragment"
+            android:id="@+id/action_launchesFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/launchDetailFragment"
-        android:name="team.lf.spacex.ui.launch_detail.LaunchDetailFragment"
-        android:label="LaunchDetailFragment"
-        tools:layout="@layout/fragment_launch_detail"
-
-        >
+        android:id="@+id/viewPagerFragment"
+        android:name="team.lf.spacex.ui.launch_detail.ViewPagerFragment"
+        android:label="ViewPagerFragment" >
         <argument
             android:name="launch"
             app:argType="team.lf.spacex.domain.Launch" />

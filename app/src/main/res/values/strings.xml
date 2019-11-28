@@ -4,4 +4,6 @@
     <string name="all_launches_header_text">All launches: </string>
     <string name="details_header">Details:</string>
     <string name="flight_number_label">fl.n.</string>
+    <string name="tab_text_1">Details</string>
+    <string name="tab_text_2">Photos</string>
 </resources>

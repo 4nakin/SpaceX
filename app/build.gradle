@@ -82,4 +82,11 @@ dependencies {
     def room_version = "2.2.2"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //viewPager
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    //tabLayoutMediator
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
 }
