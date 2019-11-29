@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -25,12 +26,13 @@ class ViewPagerFragment : Fragment() {
             inflater, R.layout.fragment_viewpager, container, false
         )
         val sectionsPagerAdapter = SectionsPagerAdapter(this, args.launch)
+        (activity as AppCompatActivity).supportActionBar?.title = args.launch.mission_name
+
         binding.pager.apply {
             adapter = sectionsPagerAdapter
         }
 
-        TabLayoutMediator(binding.tabs, binding.pager){
-            tab, position ->
+        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             run {
                 tab.text = context?.resources?.getText(SectionsPagerAdapter.TAB_TITLES[position])
 

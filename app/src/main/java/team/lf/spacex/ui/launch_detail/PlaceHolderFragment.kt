@@ -59,8 +59,6 @@ class PlaceHolderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         when (arguments!!.getInt("section_number")) {
             1 -> {
                 val binding: FragmentLaunchDetailsPageTextBinding = DataBindingUtil.inflate(
@@ -68,8 +66,9 @@ class PlaceHolderFragment : Fragment() {
                 )
                 binding.viewModel = viewModel
                 binding.lifecycleOwner = viewLifecycleOwner
+                //todo animation could be defined with viewModel. It helps to avoid animation after rotate.
                 binding.scroller.alpha = 0f
-                ObjectAnimator.ofFloat(binding.scroller, View.ALPHA,  1f).apply {
+                ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
                     startDelay = 1500
                     duration = 500
                 }.start()
