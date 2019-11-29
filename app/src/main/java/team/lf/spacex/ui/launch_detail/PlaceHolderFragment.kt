@@ -1,5 +1,6 @@
 package team.lf.spacex.ui.launch_detail
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.delay
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
@@ -66,6 +68,11 @@ class PlaceHolderFragment : Fragment() {
                 )
                 binding.viewModel = viewModel
                 binding.lifecycleOwner = viewLifecycleOwner
+                binding.scroller.alpha = 0f
+                ObjectAnimator.ofFloat(binding.scroller, View.ALPHA,  1f).apply {
+                    startDelay = 1500
+                    duration = 500
+                }.start()
                 return binding.root
             }
             2 -> {
@@ -89,12 +96,11 @@ class PlaceHolderFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.isSMButtonClicked.observe(viewLifecycleOwner, Observer {
-            if(it){
+            if (it) {
                 val path = viewModel.pathSM.value
-                if(!path.isNullOrBlank() ){
+                if (!path.isNullOrBlank()) {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(path)))
-                }
-                else{
+                } else {
                     Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
                 }
                 viewModel.onSMNavigated()
