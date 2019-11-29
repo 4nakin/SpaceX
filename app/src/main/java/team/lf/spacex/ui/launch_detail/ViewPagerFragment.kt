@@ -26,7 +26,11 @@ class ViewPagerFragment : Fragment() {
         }
 
         TabLayoutMediator(binding.tabs, binding.pager){
-            tab, position -> tab.text = context?.resources?.getText(SectionsPagerAdapter.TAB_TITLES[position])
+            tab, position ->
+            run {
+                tab.text = context?.resources?.getText(SectionsPagerAdapter.TAB_TITLES[position])
+
+            }
         }.attach()
 
         return binding.root

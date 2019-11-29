@@ -31,3 +31,5 @@ data class LaunchSite(
     val site_name: String,
     val site_name_long: String
 ):Parcelable
+
+data class FlickrImage(val url: String)

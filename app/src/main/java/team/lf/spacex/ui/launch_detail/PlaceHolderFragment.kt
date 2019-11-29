@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
@@ -70,6 +71,11 @@ class PlaceHolderFragment : Fragment() {
                 )
                 binding.viewModel = viewModel
                 binding.lifecycleOwner = viewLifecycleOwner
+                val adapter = FlickrImagesAdapter()
+                binding.recycler.adapter = adapter
+                viewModel.launch.observe(viewLifecycleOwner, Observer {
+                    adapter.submitListAsync(it)
+                })
                 return binding.root
             }
             else -> throw IllegalStateException()

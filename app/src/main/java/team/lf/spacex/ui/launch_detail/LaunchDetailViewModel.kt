@@ -24,6 +24,20 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
 
     //fun addLaunchToFavorites
 
+    private var _onSMButtonClicked = Boolean
+
+    fun onRedditButtonClicked(){
+
+    }
+
+    fun onYoutubeButtonClicked(){
+
+    }
+
+    fun onWikiButtonClicked(){
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
