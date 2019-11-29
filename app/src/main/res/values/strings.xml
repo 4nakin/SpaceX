@@ -8,4 +8,5 @@
     <string name="tab_text_2">Photos</string>
     <string name="about">About</string>
     <string name="company_info">Company info</string>
+    <string name="all_launches_fragment_title">All launches</string>
 </resources>

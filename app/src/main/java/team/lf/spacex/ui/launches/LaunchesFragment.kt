@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,7 +36,6 @@ class LaunchesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.title = "All launches" //todo from resources
         val binding: FragmentAllLaunchesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_all_launches, container, false
         )
@@ -56,6 +57,7 @@ class LaunchesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.allLaunches.observe(viewLifecycleOwner, Observer {
             launchesAdapter.submitLaunchListAsync(it)
+            (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.all_launches_fragment_title)
         })
         viewModel.refreshAllLaunchesFromRepository()
     }
