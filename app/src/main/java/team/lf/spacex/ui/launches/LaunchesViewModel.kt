@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import team.lf.spacex.database.getDatabase
-import team.lf.spacex.network.SpaceXApi
+import team.lf.spacex.domain.Launch
 import team.lf.spacex.repository.SpaceXRepository
 import timber.log.Timber
 import java.io.IOException
@@ -42,9 +42,27 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+
+
+    private var _isLaunchDetailNavigate = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val isLaunchDetailNavigate: LiveData<Boolean>
+        get() = _isLaunchDetailNavigate
+    private var _launchToWatch = MutableLiveData<Launch>()
+    val launchToWatch: LiveData<Launch>
+        get() = _launchToWatch
+    fun onLaunchDetailNavigate(it: Launch) {
+        _launchToWatch.value = it
+        _isLaunchDetailNavigate.value = true
+    }
+    fun onLaunchDetailNavigated() {
+        _isLaunchDetailNavigate.value = false
+    }
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
+
 
     override fun onCleared() {
         super.onCleared()

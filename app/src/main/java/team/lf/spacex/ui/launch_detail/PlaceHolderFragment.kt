@@ -18,17 +18,12 @@ import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
 import team.lf.spacex.domain.Launch
 
 private const val ARG_SECTION_NUMBER = "section_number"
-private const val ARG_LAUNCH = "launch"
+const val ARG_LAUNCH = "launch"
 
 
 class PlaceHolderFragment : Fragment() {
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-
         /**
          * Returns a new instance of this fragment for the given section
          * number.
