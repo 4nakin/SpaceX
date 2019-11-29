@@ -13,12 +13,11 @@
             android:id="@+id/tabs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:background="@color/primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabTextColor="@color/design_default_color_on_primary" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
