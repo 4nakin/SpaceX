@@ -1,9 +1,7 @@
 package team.lf.spacex.ui.launch_detail
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,20 +20,37 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    //fun addLaunchToFavorites
 
-    private var _onSMButtonClicked = Boolean
+    private var _isSMButtonClicked = MutableLiveData<Boolean>()
+    val isSMButtonClicked: LiveData<Boolean>
+        get() = _isSMButtonClicked
+    private var _pathSM = MutableLiveData<String>()
+    val pathSM: LiveData<String>
+        get() = _pathSM
 
-    fun onRedditButtonClicked(){
-
+    fun onRedditButtonClicked() {
+        this.launch.value?.let {
+            _pathSM.value = it.links.reddit_campaign
+            _isSMButtonClicked.value = true
+        }
     }
 
-    fun onYoutubeButtonClicked(){
-
+    fun onYoutubeButtonClicked() {
+        this.launch.value?.let {
+            _pathSM.value = it.links.video_link
+            _isSMButtonClicked.value = true
+        }
     }
 
-    fun onWikiButtonClicked(){
+    fun onWikiButtonClicked() {
+        this.launch.value?.let {
+            _pathSM.value = it.links.wikipedia
+            _isSMButtonClicked.value = true
+        }
+    }
 
+    fun onSMNavigated() {
+        _isSMButtonClicked.value = false
     }
 
     override fun onCleared() {
@@ -43,7 +58,8 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
         viewModelJob.cancel()
     }
 
-    class Factory(private val app: Application, private val launch: Launch) : ViewModelProvider.Factory {
+    class Factory(private val app: Application, private val launch: Launch) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LaunchDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

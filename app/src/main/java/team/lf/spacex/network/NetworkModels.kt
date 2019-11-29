@@ -145,7 +145,7 @@ data class Timeline(
 fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.database.Launch> {
     return map {
         team.lf.spacex.database.Launch(
-            details = it.details ?: "",
+            details = it.details ?: "Empty",
             flight_number = it.flight_number ?: "",
             launch_date_local = it.launch_date_local ?: "",
             launch_date_unix = it.launch_date_unix ?: "",

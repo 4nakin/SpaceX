@@ -1,9 +1,12 @@
 package team.lf.spacex.ui.launch_detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -81,6 +84,22 @@ class PlaceHolderFragment : Fragment() {
             else -> throw IllegalStateException()
         }
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.isSMButtonClicked.observe(viewLifecycleOwner, Observer {
+            if(it){
+                val path = viewModel.pathSM.value
+                if(!path.isNullOrBlank() ){
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(path)))
+                }
+                else{
+                    Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
+                }
+                viewModel.onSMNavigated()
+            }
+        })
     }
 
 }
