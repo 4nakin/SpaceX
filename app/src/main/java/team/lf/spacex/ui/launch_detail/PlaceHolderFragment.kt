@@ -66,8 +66,8 @@ class PlaceHolderFragment : Fragment() {
                     if(it){
                         binding.scroller.alpha = 0f
                         ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
-                            startDelay = 1500
-                            duration = 500
+                            startDelay = 1000
+                            duration = 1000
                         }.start()
                         viewModel.onScrollerAlphaAnimated()
                     }
