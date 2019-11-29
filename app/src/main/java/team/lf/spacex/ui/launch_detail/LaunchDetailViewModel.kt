@@ -58,6 +58,17 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
         viewModelJob.cancel()
     }
 
+    private var _isScrollerAlphaAnimation = MutableLiveData<Boolean>().apply {
+        value = true
+    }
+    val isScrollerAlphaAnimation: LiveData<Boolean>
+        get() = _isScrollerAlphaAnimation
+
+    fun onScrollerAlphaAnimated(){
+        _isScrollerAlphaAnimation.value = false
+    }
+
+
     class Factory(private val app: Application, private val launch: Launch) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

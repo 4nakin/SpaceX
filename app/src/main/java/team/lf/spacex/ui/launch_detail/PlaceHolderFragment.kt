@@ -12,13 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.coroutines.delay
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
 import team.lf.spacex.domain.Launch
-import timber.log.Timber
-import java.lang.IllegalStateException
+
+private const val ARG_SECTION_NUMBER = "section_number"
+private const val ARG_LAUNCH = "launch"
+
 
 class PlaceHolderFragment : Fragment() {
 
@@ -27,7 +28,6 @@ class PlaceHolderFragment : Fragment() {
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private const val ARG_SECTION_NUMBER = "section_number"
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -38,7 +38,7 @@ class PlaceHolderFragment : Fragment() {
             return PlaceHolderFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
-                    putParcelable("launch", launch)
+                    putParcelable(ARG_LAUNCH, launch)
                 }
             }
         }
@@ -48,8 +48,7 @@ class PlaceHolderFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        val args = arguments!!
-        val launch: Launch = args.getParcelable("launch")!!
+        val launch: Launch = arguments!!.getParcelable(ARG_LAUNCH)!!
         ViewModelProvider(this, LaunchDetailViewModel.Factory(activity.application, launch))
             .get(LaunchDetailViewModel::class.java)
     }
@@ -59,19 +58,25 @@ class PlaceHolderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        when (arguments!!.getInt("section_number")) {
+        when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
             1 -> {
                 val binding: FragmentLaunchDetailsPageTextBinding = DataBindingUtil.inflate(
                     inflater, R.layout.fragment_launch_details_page_text, container, false
                 )
                 binding.viewModel = viewModel
                 binding.lifecycleOwner = viewLifecycleOwner
-                //todo animation could be defined with viewModel. It helps to avoid animation after rotate.
-                binding.scroller.alpha = 0f
-                ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
-                    startDelay = 1500
-                    duration = 500
-                }.start()
+
+                //Жена сказала, что с такой анимацией красивее =)
+                viewModel.isScrollerAlphaAnimation.observe(viewLifecycleOwner, Observer {
+                    if(it){
+                        binding.scroller.alpha = 0f
+                        ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
+                            startDelay = 1500
+                            duration = 500
+                        }.start()
+                        viewModel.onScrollerAlphaAnimated()
+                    }
+                })
                 return binding.root
             }
             2 -> {
