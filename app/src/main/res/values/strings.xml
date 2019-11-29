@@ -6,4 +6,6 @@
     <string name="flight_number_label">fl.n.</string>
     <string name="tab_text_1">Details</string>
     <string name="tab_text_2">Photos</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
 </resources>

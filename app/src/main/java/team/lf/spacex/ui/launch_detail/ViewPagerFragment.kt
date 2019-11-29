@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentViewpagerBinding
 
 class ViewPagerFragment : Fragment() {
+
+    private val args: ViewPagerFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +24,7 @@ class ViewPagerFragment : Fragment() {
         val binding: FragmentViewpagerBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_viewpager, container, false
         )
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, ViewPagerFragmentArgs.fromBundle(arguments!!).launch)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, args.launch)
         binding.pager.apply {
             adapter = sectionsPagerAdapter
         }
