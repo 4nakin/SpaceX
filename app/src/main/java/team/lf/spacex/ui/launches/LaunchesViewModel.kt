@@ -2,10 +2,8 @@ package team.lf.spacex.ui.launches
 
 import android.app.Application
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import team.lf.spacex.Event
 import team.lf.spacex.database.getDatabase
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.repository.SpaceXRepository
@@ -16,10 +14,9 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
 
     private val repository = SpaceXRepository(getDatabase(application.applicationContext))
 
-    val allLaunches = repository.allLaunches
+    private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
+    val allLaunches = _allLaunches
 
-    private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
@@ -42,40 +39,14 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    private val _openLaunchEvent = MutableLiveData<Event<Launch>>()
+    val openLaunchEvent: LiveData<Event<Launch>> = _openLaunchEvent
 
+    fun openLaunch(launch: Launch){
+        _openLaunchEvent.value = Event(launch)
+    }
 
-    private var _isLaunchDetailNavigate = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-    val isLaunchDetailNavigate: LiveData<Boolean>
-        get() = _isLaunchDetailNavigate
-    private var _launchToWatch = MutableLiveData<Launch>()
-    val launchToWatch: LiveData<Launch>
-        get() = _launchToWatch
-    fun onLaunchDetailNavigate(it: Launch) {
-        _launchToWatch.value = it
-        _isLaunchDetailNavigate.value = true
-    }
-    fun onLaunchDetailNavigated() {
-        _isLaunchDetailNavigate.value = false
-    }
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    class Factory(private val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LaunchesViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return LaunchesViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
     }
 }

@@ -14,7 +14,6 @@ import team.lf.spacex.databinding.ItemLaunchBinding
 import team.lf.spacex.domain.FlickrImage
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.ui.launches.LaunchesAdapter
-import team.lf.spacex.ui.launches.OnLaunchClickListener
 
 class FlickrImagesAdapter() :
     ListAdapter<FlickrImage, RecyclerView.ViewHolder>(FlickrImagesDiffCallback()) {

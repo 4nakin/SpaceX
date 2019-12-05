@@ -10,6 +10,7 @@ import team.lf.spacex.database.asDomainModels
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.network.SpaceXApi
 import team.lf.spacex.network.asDatabaseModels
+import timber.log.Timber
 
 class SpaceXRepository(private val database: SpaceXDatabase) {
 
