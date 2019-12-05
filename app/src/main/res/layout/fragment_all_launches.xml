@@ -10,24 +10,35 @@
             type="team.lf.spacex.ui.launches.LaunchesViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <team.lf.spacex.ScrollChildSwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{viewmodel::refreshAllLaunchesFromRepository}"
+            app:refreshing="@{viewmodel.dataLoading}">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/normal_space"
-            android:layout_marginEnd="@dimen/normal_space"
-            android:layout_marginBottom="@dimen/normal_space"
-            app:items="@{viewmodel.allLaunches}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_launch" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/normal_space"
+                    android:layout_marginEnd="@dimen/normal_space"
+                    android:layout_marginBottom="@dimen/normal_space"
+                    app:items="@{viewmodel.allLaunches}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_launch" />
+            </LinearLayout>
+        </team.lf.spacex.ScrollChildSwipeRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 </layout>

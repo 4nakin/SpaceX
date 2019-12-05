@@ -23,18 +23,25 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
     private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
     val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
 
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
     init {
         refreshAllLaunchesFromRepository()
     }
 
     fun refreshAllLaunchesFromRepository() {
+
         viewModelScope.launch {
             try {
+                _dataLoading.value = true
                 repository.refreshAllLaunches()
                 _networkErrorEvent.value = Event(false)
+                _dataLoading.value = false
+
             } catch (networkError: IOException) {
                 _networkErrorEvent.value = Event(true)
-
+                _dataLoading.value = false
             }
         }
     }

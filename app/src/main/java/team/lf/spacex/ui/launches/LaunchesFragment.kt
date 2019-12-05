@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import team.lf.spacex.EventObserver
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
 import team.lf.spacex.domain.Launch
+import team.lf.spacex.setupRefreshLayout
 import timber.log.Timber
 
 class LaunchesFragment : Fragment() {
@@ -39,6 +40,7 @@ class LaunchesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
+        setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.recycler)
         setupListAdapter()
         setupNavigation()
         setupNetworkErrorEvent()

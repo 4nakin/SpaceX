@@ -8,7 +8,6 @@ import kotlinx.coroutines.SupervisorJob
 import team.lf.spacex.database.getDatabase
 import team.lf.spacex.domain.Launch
 import team.lf.spacex.repository.SpaceXRepository
-import team.lf.spacex.ui.launches.LaunchesViewModel
 
 class LaunchDetailViewModel(application: Application, launch: Launch) :
     AndroidViewModel(application) {
