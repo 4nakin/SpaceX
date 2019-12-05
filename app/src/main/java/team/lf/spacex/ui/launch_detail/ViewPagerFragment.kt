@@ -16,7 +16,6 @@ class ViewPagerFragment : Fragment() {
 
     private val args: ViewPagerFragmentArgs by navArgs()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
