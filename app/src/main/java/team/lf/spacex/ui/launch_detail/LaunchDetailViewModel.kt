@@ -18,10 +18,9 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
         )
     )
 
-    val launch = repository.getLaunchByFlightNumberFromDatabase(launch.flight_number)
 
-    private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val launch = repository.getLaunchByFlightNumberFromDatabase(launch.flight_number)
 
 
     private var _isSMButtonClicked = MutableLiveData<Boolean>()
@@ -54,11 +53,6 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
 
     fun onSMNavigated() {
         _isSMButtonClicked.value = false
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
     private var _isScrollerAlphaAnimation = MutableLiveData<Boolean>().apply {
