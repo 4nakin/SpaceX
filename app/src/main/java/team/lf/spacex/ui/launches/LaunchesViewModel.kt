@@ -17,36 +17,29 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
     private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
     val allLaunches = _allLaunches
 
+    private val _openLaunchEvent = MutableLiveData<Event<Launch>>()
+    val openLaunchEvent: LiveData<Event<Launch>> = _openLaunchEvent
 
-    private var _eventNetworkError = MutableLiveData<Boolean>(false)
-    val eventNetworkError: LiveData<Boolean>
-        get() = _eventNetworkError
-    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-    val isNetworkErrorShown: LiveData<Boolean>
-        get() = _isNetworkErrorShown
+    private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
+    val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
+
+    init {
+        refreshAllLaunchesFromRepository()
+    }
 
     fun refreshAllLaunchesFromRepository() {
         viewModelScope.launch {
             try {
-                Timber.d("refreshLaunches")
                 repository.refreshAllLaunches()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
+                _networkErrorEvent.value = Event(false)
             } catch (networkError: IOException) {
-                Timber.d(networkError)
-                _eventNetworkError.value = true
+                _networkErrorEvent.value = Event(true)
+
             }
         }
     }
 
-    private val _openLaunchEvent = MutableLiveData<Event<Launch>>()
-    val openLaunchEvent: LiveData<Event<Launch>> = _openLaunchEvent
-
-    fun openLaunch(launch: Launch){
+    fun openLaunch(launch: Launch) {
         _openLaunchEvent.value = Event(launch)
-    }
-
-    fun onNetworkErrorShown() {
-        _isNetworkErrorShown.value = true
     }
 }

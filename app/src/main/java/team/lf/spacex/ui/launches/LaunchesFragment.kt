@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import team.lf.spacex.EventObserver
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
 import team.lf.spacex.domain.Launch
@@ -40,10 +41,15 @@ class LaunchesFragment : Fragment() {
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupListAdapter()
         setupNavigation()
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer {
-            if (it) onNetworkError()
+        setupNetworkErrorEvent()
+    }
+
+    private fun setupNetworkErrorEvent() {
+        viewModel.networkErrorEvent.observe(viewLifecycleOwner, EventObserver {
+            if (it) {
+                Snackbar.make(viewDataBinding.root, "Network Error", Snackbar.LENGTH_SHORT).show()
+            }
         })
-        viewModel.refreshAllLaunchesFromRepository()
     }
 
     private fun setupNavigation() {
@@ -65,15 +71,9 @@ class LaunchesFragment : Fragment() {
         if (viewModel != null) {
             listAdapter = LaunchesAdapter(viewModel)
             viewDataBinding.recycler.adapter = listAdapter
-        }else {
+        } else {
             Timber.w("ViewModel not initialized when attempting to set up adapter.")
         }
     }
 
-    private fun onNetworkError() {
-        if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
-            viewModel.onNetworkErrorShown()
-        }
-    }
 }
