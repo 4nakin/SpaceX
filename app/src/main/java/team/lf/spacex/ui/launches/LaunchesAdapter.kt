@@ -9,9 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.ItemLaunchBinding
-import team.lf.spacex.domain.Launch
-import timber.log.Timber
 
 
 class LaunchesAdapter(private val viewModel: LaunchesViewModel) :

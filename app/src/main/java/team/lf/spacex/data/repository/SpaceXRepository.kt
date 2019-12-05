@@ -1,16 +1,15 @@
-package team.lf.spacex.repository
+package team.lf.spacex.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import team.lf.spacex.database.SpaceXDatabase
-import team.lf.spacex.database.asDomainLaunchModel
-import team.lf.spacex.database.asDomainModels
-import team.lf.spacex.domain.Launch
-import team.lf.spacex.network.SpaceXApi
-import team.lf.spacex.network.asDatabaseModels
-import timber.log.Timber
+import team.lf.spacex.data.database.SpaceXDatabase
+import team.lf.spacex.data.database.asDomainLaunchModel
+import team.lf.spacex.data.database.asDomainModels
+import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.network.SpaceXApi
+import team.lf.spacex.data.network.asDatabaseModels
 
 class SpaceXRepository(private val database: SpaceXDatabase) {
 

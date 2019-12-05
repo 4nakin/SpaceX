@@ -3,16 +3,19 @@ package team.lf.spacex.ui.launches
 import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import team.lf.spacex.Event
-import team.lf.spacex.database.getDatabase
-import team.lf.spacex.domain.Launch
-import team.lf.spacex.repository.SpaceXRepository
-import timber.log.Timber
+import team.lf.spacex.data.Event
+import team.lf.spacex.data.database.getDatabase
+import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
 
 class LaunchesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = SpaceXRepository(getDatabase(application.applicationContext))
+    private val repository = SpaceXRepository(
+        getDatabase(
+            application.applicationContext
+        )
+    )
 
     private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
     val allLaunches = _allLaunches

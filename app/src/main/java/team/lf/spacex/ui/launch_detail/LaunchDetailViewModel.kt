@@ -5,14 +5,18 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import team.lf.spacex.database.getDatabase
-import team.lf.spacex.domain.Launch
-import team.lf.spacex.repository.SpaceXRepository
+import team.lf.spacex.data.database.getDatabase
+import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.repository.SpaceXRepository
 
 class LaunchDetailViewModel(application: Application, launch: Launch) :
     AndroidViewModel(application) {
 
-    private val repository = SpaceXRepository(getDatabase(application.applicationContext))
+    private val repository = SpaceXRepository(
+        getDatabase(
+            application.applicationContext
+        )
+    )
 
     val launch = repository.getLaunchByFlightNumberFromDatabase(launch.flight_number)
 

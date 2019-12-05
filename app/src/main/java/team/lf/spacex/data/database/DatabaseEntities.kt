@@ -1,4 +1,4 @@
-package team.lf.spacex.database
+package team.lf.spacex.data.database
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -39,7 +39,7 @@ data class LaunchSite(
     val site_name_long: String
 )
 
-fun List<Launch>.asDomainModels(): List<team.lf.spacex.domain.Launch> {
+fun List<Launch>.asDomainModels(): List<team.lf.spacex.data.domain.Launch> {
     return map {
         it.asDomainLaunchModel()
     }
@@ -47,18 +47,18 @@ fun List<Launch>.asDomainModels(): List<team.lf.spacex.domain.Launch> {
 
 }
 
-fun Launch.asDomainLaunchModel(): team.lf.spacex.domain.Launch {
-    return team.lf.spacex.domain.Launch(
+fun Launch.asDomainLaunchModel(): team.lf.spacex.data.domain.Launch {
+    return team.lf.spacex.data.domain.Launch(
         details,
         flight_number,
         launch_date_utc,
         launch_date_unix,
-        team.lf.spacex.domain.LaunchSite(
+        team.lf.spacex.data.domain.LaunchSite(
             launch_site.site_name,
             launch_site.site_name_long
         ),
         launch_success,
-        team.lf.spacex.domain.Links(
+        team.lf.spacex.data.domain.Links(
             links.article_link,
             links.flickr_images.split(","),
             links.mission_patch,

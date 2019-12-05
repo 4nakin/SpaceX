@@ -6,7 +6,7 @@
     <data>
 <variable
     name="flickrImage"
-    type="team.lf.spacex.domain.FlickrImage" />
+    type="team.lf.spacex.data.domain.FlickrImage" />
     </data>
 
     <androidx.cardview.widget.CardView

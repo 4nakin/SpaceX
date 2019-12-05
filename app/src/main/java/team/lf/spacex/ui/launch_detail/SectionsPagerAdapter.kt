@@ -4,10 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import team.lf.spacex.R
-import team.lf.spacex.domain.Launch
-
-
-
+import team.lf.spacex.data.domain.Launch
 
 
 /**
@@ -17,10 +14,11 @@ import team.lf.spacex.domain.Launch
 class SectionsPagerAdapter(fragment: Fragment, private val launch: Launch) :
     FragmentStateAdapter(fragment) {
 
-    companion object{
+    companion object {
         val TAB_TITLES = arrayOf(
             R.string.tab_text_1,
-            R.string.tab_text_2)
+            R.string.tab_text_2
+        )
     }
 
     override fun getItemCount(): Int = 2

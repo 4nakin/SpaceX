@@ -9,11 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import team.lf.spacex.data.domain.FlickrImage
+import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.ItemFlickrBinding
-import team.lf.spacex.databinding.ItemLaunchBinding
-import team.lf.spacex.domain.FlickrImage
-import team.lf.spacex.domain.Launch
-import team.lf.spacex.ui.launches.LaunchesAdapter
 
 class FlickrImagesAdapter() :
     ListAdapter<FlickrImage, RecyclerView.ViewHolder>(FlickrImagesDiffCallback()) {

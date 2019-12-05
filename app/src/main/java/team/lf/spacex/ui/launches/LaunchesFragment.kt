@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import team.lf.spacex.EventObserver
+import team.lf.spacex.data.EventObserver
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
-import team.lf.spacex.domain.Launch
+import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.setupRefreshLayout
 import timber.log.Timber
 
@@ -47,17 +45,20 @@ class LaunchesFragment : Fragment() {
     }
 
     private fun setupNetworkErrorEvent() {
-        viewModel.networkErrorEvent.observe(viewLifecycleOwner, EventObserver {
-            if (it) {
-                Snackbar.make(viewDataBinding.root, "Network Error", Snackbar.LENGTH_SHORT).show()
-            }
-        })
+        viewModel.networkErrorEvent.observe(viewLifecycleOwner,
+            EventObserver {
+                if (it) {
+                    Snackbar.make(viewDataBinding.root, "Network Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            })
     }
 
     private fun setupNavigation() {
-        viewModel.openLaunchEvent.observe(this, EventObserver {
-            openLaunch(it)
-        })
+        viewModel.openLaunchEvent.observe(this,
+            EventObserver {
+                openLaunch(it)
+            })
     }
 
     private fun openLaunch(it: Launch) {

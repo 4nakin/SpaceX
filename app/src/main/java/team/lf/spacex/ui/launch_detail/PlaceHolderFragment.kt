@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
-import team.lf.spacex.domain.Launch
+import team.lf.spacex.data.domain.Launch
 
 private const val ARG_SECTION_NUMBER = "section_number"
 const val ARG_LAUNCH = "launch"

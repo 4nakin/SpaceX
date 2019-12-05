@@ -2,7 +2,7 @@ package team.lf.spacex.ui.launches
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import team.lf.spacex.domain.Launch
+import team.lf.spacex.data.domain.Launch
 
 @BindingAdapter("app:items")
 fun setItems(listView: RecyclerView, items: List<Launch>?) {
