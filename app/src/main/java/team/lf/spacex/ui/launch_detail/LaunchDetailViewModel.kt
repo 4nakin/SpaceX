@@ -1,15 +1,18 @@
 package team.lf.spacex.ui.launch_detail
 
 import android.app.Application
-import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.Transformations.switchMap
+import team.lf.spacex.data.Event
 import team.lf.spacex.data.database.getDatabase
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.repository.SpaceXRepository
 
-class LaunchDetailViewModel(application: Application, launch: Launch) :
+
+class LaunchDetailViewModel(application: Application) :
     AndroidViewModel(application) {
 
     private val repository = SpaceXRepository(
@@ -18,42 +21,64 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
         )
     )
 
+    private val _launchFlightNumber = MutableLiveData<String>()
+    private val _launch = switchMap(_launchFlightNumber){
+        repository.getLaunchByFlightNumberFromDatabase(_launchFlightNumber.value!!)
+    }
+    val launch: LiveData<Launch?> = _launch
 
+    val isDataAvailable: LiveData<Boolean> = map(_launch){ it != null }
 
-    val launch = repository.getLaunchByFlightNumberFromDatabase(launch.flight_number)
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private val _redditButtonClickedEvent = MutableLiveData<Event<Unit>>()
+    val redditButtonClicked: LiveData<Event<Unit>> = _redditButtonClickedEvent
+
+    private val _wikiButtonClickedEvent = MutableLiveData<Event<Unit>>()
+    val wikiButtonClickedEvent: LiveData<Event<Unit>> = _wikiButtonClickedEvent
+
+    private val _youtubeButtonClickedEvent = MutableLiveData<Event<Unit>>()
+    val youtubeButtonClicked: LiveData<Event<Unit>> = _youtubeButtonClickedEvent
 
     private var _isSMButtonClicked = MutableLiveData<Boolean>()
     val isSMButtonClicked: LiveData<Boolean>
         get() = _isSMButtonClicked
-    private var _pathSM = MutableLiveData<String>()
-    val pathSM: LiveData<String>
-        get() = _pathSM
+    private var _path = MutableLiveData<String>()
+    val path: LiveData<String>
+        get() = _path
 
     fun onRedditButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.reddit_campaign
-            _isSMButtonClicked.value = true
+            _path.value = it.links.reddit_campaign
+            _redditButtonClickedEvent.value = Event(Unit)
         }
     }
 
     fun onYoutubeButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.video_link
-            _isSMButtonClicked.value = true
+            _path.value = it.links.video_link
+            _youtubeButtonClickedEvent.value =Event(Unit)
         }
     }
 
     fun onWikiButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.wikipedia
-            _isSMButtonClicked.value = true
+            _path.value = it.links.wikipedia
+            _wikiButtonClickedEvent.value = Event(Unit)
         }
     }
 
-    fun onSMNavigated() {
-        _isSMButtonClicked.value = false
+    fun start(launchFlightNumber: String?) {
+        // If we're already loading or already loaded, return (might be a config change)
+        if (_dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
+            return
+        }
+        // Trigger the load
+        _launchFlightNumber.value = launchFlightNumber
     }
+
+
 
     private var _isScrollerAlphaAnimation = MutableLiveData<Boolean>().apply {
         value = true
@@ -64,17 +89,4 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
     fun onScrollerAlphaAnimated(){
         _isScrollerAlphaAnimation.value = false
     }
-
-
-    class Factory(private val app: Application, private val launch: Launch) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LaunchDetailViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return LaunchDetailViewModel(app, launch) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
-
 }

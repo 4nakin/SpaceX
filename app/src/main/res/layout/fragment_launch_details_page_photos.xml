@@ -11,11 +11,17 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <LinearLayout
+        android:id="@+id/photo_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_flickr" />
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_flickr" />
+    </LinearLayout>
+
 
 </layout>

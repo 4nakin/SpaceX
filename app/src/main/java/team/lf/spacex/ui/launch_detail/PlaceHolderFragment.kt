@@ -10,15 +10,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
 import team.lf.spacex.data.domain.Launch
+import timber.log.Timber
 
 private const val ARG_SECTION_NUMBER = "section_number"
-const val ARG_LAUNCH = "launch"
+const val ARG_LAUNCH_FLIGHT_NUMBER = "launch"
 
 
 class PlaceHolderFragment : Fragment() {
@@ -33,26 +34,23 @@ class PlaceHolderFragment : Fragment() {
             return PlaceHolderFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
-                    putParcelable(ARG_LAUNCH, launch)
+                    putString(ARG_LAUNCH_FLIGHT_NUMBER, launch.flight_number)
                 }
             }
         }
     }
 
-    private val viewModel: LaunchDetailViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        val launch: Launch = arguments!!.getParcelable(ARG_LAUNCH)!!
-        ViewModelProvider(this, LaunchDetailViewModel.Factory(activity.application, launch))
-            .get(LaunchDetailViewModel::class.java)
-    }
+    private val viewModel by viewModels<LaunchDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.start(arguments!!.getString(ARG_LAUNCH_FLIGHT_NUMBER))
+        Timber.d("fragment created")
+
+        //todo refactor this logic to using only one binding with VISIBLE GONE
         when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
             1 -> {
                 val binding: FragmentLaunchDetailsPageTextBinding = DataBindingUtil.inflate(
@@ -63,7 +61,7 @@ class PlaceHolderFragment : Fragment() {
 
                 //Жена сказала, что с такой анимацией красивее =)
                 viewModel.isScrollerAlphaAnimation.observe(viewLifecycleOwner, Observer {
-                    if(it){
+                    if (it) {
                         binding.scroller.alpha = 0f
                         ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
                             startDelay = 1000
@@ -83,7 +81,9 @@ class PlaceHolderFragment : Fragment() {
                 val adapter = FlickrImagesAdapter()
                 binding.recycler.adapter = adapter
                 viewModel.launch.observe(viewLifecycleOwner, Observer {
-                    adapter.submitListAsync(it)
+                    it?.let{
+                        adapter.submitListAsync(it)
+                    }
                 })
                 return binding.root
             }
@@ -96,13 +96,12 @@ class PlaceHolderFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.isSMButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
-                val path = viewModel.pathSM.value
+                val path = viewModel.path.value
                 if (!path.isNullOrBlank()) {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(path)))
                 } else {
                     Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
                 }
-                viewModel.onSMNavigated()
             }
         })
     }
