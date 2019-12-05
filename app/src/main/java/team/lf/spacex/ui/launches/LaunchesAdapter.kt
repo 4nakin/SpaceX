@@ -1,7 +1,6 @@
 package team.lf.spacex.ui.launches
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,13 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import team.lf.spacex.R
+import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.ItemLaunchBinding
-import team.lf.spacex.domain.Launch
 
 
-class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
-    ListAdapter<Launch, RecyclerView.ViewHolder>(LaunchesDiffCallback()) {
+class LaunchesAdapter(private val viewModel: LaunchesViewModel) :
+    ListAdapter<Launch, LaunchesAdapter.LaunchesViewHolder>(LaunchesDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
@@ -28,26 +26,26 @@ class LaunchesAdapter(private val clickListener: OnLaunchClickListener) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchesViewHolder {
         return LaunchesViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is LaunchesViewHolder -> {
-                val item = getItem(position) as Launch
-                holder.bind(item, clickListener)
-            }
-        }
+    override fun onBindViewHolder(holder: LaunchesViewHolder, position: Int) {
+        val item = getItem(position) as Launch
+        holder.bind(item, viewModel)
     }
 
     class LaunchesViewHolder private constructor(private val binding: ItemLaunchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Launch, clickListener: OnLaunchClickListener) {
+        fun bind(
+            item: Launch,
+            viewModel: LaunchesViewModel
+        ) {
             binding.launch = item
-            binding.clickListener = clickListener
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): LaunchesViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -67,8 +65,4 @@ class LaunchesDiffCallback : DiffUtil.ItemCallback<Launch>() {
     override fun areContentsTheSame(oldItem: Launch, newItem: Launch): Boolean {
         return oldItem == newItem
     }
-}
-
-class OnLaunchClickListener(val clickListener: (launch: Launch) -> Unit) {
-    fun onClick(launch: Launch) = clickListener(launch)
 }

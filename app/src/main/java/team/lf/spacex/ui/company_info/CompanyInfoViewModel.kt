@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import team.lf.spacex.domain.Launch
-import team.lf.spacex.ui.launch_detail.LaunchDetailViewModel
 
 class CompanyInfoViewModel(app: Application) : AndroidViewModel(app) {
 

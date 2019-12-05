@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
-import team.lf.spacex.domain.Launch
+import team.lf.spacex.data.domain.Launch
 
 private const val ARG_SECTION_NUMBER = "section_number"
 const val ARG_LAUNCH = "launch"
@@ -66,8 +66,8 @@ class PlaceHolderFragment : Fragment() {
                     if(it){
                         binding.scroller.alpha = 0f
                         ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
-                            startDelay = 1500
-                            duration = 500
+                            startDelay = 1000
+                            duration = 1000
                         }.start()
                         viewModel.onScrollerAlphaAnimated()
                     }

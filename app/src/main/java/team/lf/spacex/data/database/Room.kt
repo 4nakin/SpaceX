@@ -1,4 +1,4 @@
-package team.lf.spacex.database
+package team.lf.spacex.data.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -20,12 +20,12 @@ interface SpaceXDao{
 
 @Database(entities = [Launch::class], version = 1)
 abstract class SpaceXDatabase():RoomDatabase(){
-    abstract val SpaceXDao:SpaceXDao
+    abstract val SpaceXDao: SpaceXDao
 }
 
 private lateinit var INSTANCE : SpaceXDatabase
 
-fun getDatabase(context: Context): SpaceXDatabase{
+fun getDatabase(context: Context): SpaceXDatabase {
     synchronized(SpaceXDatabase::class.java){
         if(!::INSTANCE.isInitialized){
             INSTANCE = Room.databaseBuilder(context.applicationContext,

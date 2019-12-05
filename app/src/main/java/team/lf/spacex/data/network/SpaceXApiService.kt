@@ -1,4 +1,4 @@
-package team.lf.spacex.network
+package team.lf.spacex.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -26,5 +26,6 @@ interface SpaceXApiService {
 }
 
 object SpaceXApi{
-    val retrofitService: SpaceXApiService by lazy { retrofit.create(SpaceXApiService::class.java) }
+    val retrofitService: SpaceXApiService by lazy { retrofit.create(
+        SpaceXApiService::class.java) }
 }

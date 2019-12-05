@@ -1,4 +1,4 @@
-package team.lf.spacex.domain
+package team.lf.spacex.data.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
