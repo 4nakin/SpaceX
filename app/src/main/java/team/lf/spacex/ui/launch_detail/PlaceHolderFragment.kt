@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import team.lf.spacex.data.EventObserver
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
 import timber.log.Timber
@@ -71,12 +72,8 @@ class PlaceHolderFragment : Fragment() {
         })
 
         when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
-            1 -> {
-                viewModel.setPhotoPage(false)
-            }
-            2 -> {
-                viewModel.setPhotoPage(true)
-            }
+            1 -> viewModel.setPhotoPage(false)
+            2 -> viewModel.setPhotoPage(true)
             else -> throw IllegalStateException()
         }
         return viewBinding.root
@@ -85,18 +82,15 @@ class PlaceHolderFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.isSMButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                val path = viewModel.path.value
-                if (!path.isNullOrBlank()) {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(path)))
-                } else {
-                    Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
-                }
+        viewModel.navigateTo.observe(viewLifecycleOwner, EventObserver {
+            if (!it.isBlank()) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            } else {
+                Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
             }
         })
         viewModel.launch.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 adapter.submitListAsync(it)
             }
         })

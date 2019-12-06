@@ -32,40 +32,25 @@ class LaunchDetailViewModel(application: Application) :
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _redditButtonClickedEvent = MutableLiveData<Event<Unit>>()
-    val redditButtonClicked: LiveData<Event<Unit>> = _redditButtonClickedEvent
-
-    private val _wikiButtonClickedEvent = MutableLiveData<Event<Unit>>()
-    val wikiButtonClickedEvent: LiveData<Event<Unit>> = _wikiButtonClickedEvent
-
-    private val _youtubeButtonClickedEvent = MutableLiveData<Event<Unit>>()
-    val youtubeButtonClicked: LiveData<Event<Unit>> = _youtubeButtonClickedEvent
-
-    private var _isSMButtonClicked = MutableLiveData<Boolean>()
-    val isSMButtonClicked: LiveData<Boolean>
-        get() = _isSMButtonClicked
-    private var _path = MutableLiveData<String>()
-    val path: LiveData<String>
-        get() = _path
+    private var _navigateTo = MutableLiveData<Event<String>>()
+    val navigateTo: LiveData<Event<String>>
+        get() = _navigateTo
 
     fun onRedditButtonClicked() {
         this.launch.value?.let {
-            _path.value = it.links.reddit_campaign
-            _redditButtonClickedEvent.value = Event(Unit)
+            _navigateTo.value = Event(it.links.reddit_campaign)
         }
     }
 
     fun onYoutubeButtonClicked() {
         this.launch.value?.let {
-            _path.value = it.links.video_link
-            _youtubeButtonClickedEvent.value =Event(Unit)
+            _navigateTo.value = Event(it.links.video_link)
         }
     }
 
     fun onWikiButtonClicked() {
         this.launch.value?.let {
-            _path.value = it.links.wikipedia
-            _wikiButtonClickedEvent.value = Event(Unit)
+            _navigateTo.value = Event(it.links.wikipedia)
         }
     }
 
