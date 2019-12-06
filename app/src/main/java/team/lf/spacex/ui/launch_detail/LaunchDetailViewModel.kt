@@ -1,15 +1,17 @@
 package team.lf.spacex.ui.launch_detail
 
 import android.app.Application
-import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations.switchMap
+import team.lf.spacex.data.Event
 import team.lf.spacex.data.database.getDatabase
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.repository.SpaceXRepository
 
-class LaunchDetailViewModel(application: Application, launch: Launch) :
+
+class LaunchDetailViewModel(application: Application) :
     AndroidViewModel(application) {
 
     private val repository = SpaceXRepository(
@@ -18,63 +20,54 @@ class LaunchDetailViewModel(application: Application, launch: Launch) :
         )
     )
 
+    private val _launchFlightNumber = MutableLiveData<String>()
+    private val _launch = switchMap(_launchFlightNumber){
+        repository.getLaunchByFlightNumberFromDatabase(_launchFlightNumber.value!!)
+    }
+    val launch: LiveData<Launch?> = _launch
 
+    private val _isPhotoPage = MutableLiveData<Boolean>()
+    val isPhotoPage: LiveData<Boolean> = _isPhotoPage
 
-    val launch = repository.getLaunchByFlightNumberFromDatabase(launch.flight_number)
+    private val _dataLoading = MutableLiveData<Boolean>()
+    //todo swipeRefreshLayout in fragment_launch_details_page
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private var _isTextAlphaAnimation = MutableLiveData<Event<Unit>>()
+    val isTextAlphaAnimation: LiveData<Event<Unit>> = _isTextAlphaAnimation
 
-    private var _isSMButtonClicked = MutableLiveData<Boolean>()
-    val isSMButtonClicked: LiveData<Boolean>
-        get() = _isSMButtonClicked
-    private var _pathSM = MutableLiveData<String>()
-    val pathSM: LiveData<String>
-        get() = _pathSM
+    private var _navigateTo = MutableLiveData<Event<String>>()
+    val navigateTo: LiveData<Event<String>> = _navigateTo
+
+    fun start(launchFlightNumber: String?) {
+        // If we're already loading or already loaded, return (might be a config change)
+        if (dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
+            return
+        }
+        // Trigger the load
+        _launchFlightNumber.value = launchFlightNumber
+        _isTextAlphaAnimation.value  = Event(Unit)
+    }
+
+    fun setPhotoPage(set: Boolean){
+        _isPhotoPage.value = set
+    }
 
     fun onRedditButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.reddit_campaign
-            _isSMButtonClicked.value = true
+            _navigateTo.value = Event(it.links.reddit_campaign)
         }
     }
 
     fun onYoutubeButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.video_link
-            _isSMButtonClicked.value = true
+            _navigateTo.value = Event(it.links.video_link)
         }
     }
 
     fun onWikiButtonClicked() {
         this.launch.value?.let {
-            _pathSM.value = it.links.wikipedia
-            _isSMButtonClicked.value = true
+            _navigateTo.value = Event(it.links.wikipedia)
         }
     }
-
-    fun onSMNavigated() {
-        _isSMButtonClicked.value = false
-    }
-
-    private var _isScrollerAlphaAnimation = MutableLiveData<Boolean>().apply {
-        value = true
-    }
-    val isScrollerAlphaAnimation: LiveData<Boolean>
-        get() = _isScrollerAlphaAnimation
-
-    fun onScrollerAlphaAnimated(){
-        _isScrollerAlphaAnimation.value = false
-    }
-
-
-    class Factory(private val app: Application, private val launch: Launch) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LaunchDetailViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return LaunchDetailViewModel(app, launch) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
-
 }

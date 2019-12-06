@@ -24,7 +24,7 @@ class SectionsPagerAdapter(fragment: Fragment, private val launch: Launch) :
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment =
-        PlaceHolderFragment.newInstance(position + 1, launch)
+        LaunchDetailFragment.newInstance(position + 1, launch)
 
 
 }
