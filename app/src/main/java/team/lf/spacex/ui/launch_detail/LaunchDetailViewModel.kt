@@ -30,11 +30,28 @@ class LaunchDetailViewModel(application: Application) :
     val isPhotoPage: LiveData<Boolean> = _isPhotoPage
 
     private val _dataLoading = MutableLiveData<Boolean>()
+    //todo swipeRefreshLayout in fragment_launch_details_page
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private var _isTextAlphaAnimation = MutableLiveData<Event<Unit>>()
+    val isTextAlphaAnimation: LiveData<Event<Unit>> = _isTextAlphaAnimation
+
     private var _navigateTo = MutableLiveData<Event<String>>()
-    val navigateTo: LiveData<Event<String>>
-        get() = _navigateTo
+    val navigateTo: LiveData<Event<String>> = _navigateTo
+
+    fun start(launchFlightNumber: String?) {
+        // If we're already loading or already loaded, return (might be a config change)
+        if (dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
+            return
+        }
+        // Trigger the load
+        _launchFlightNumber.value = launchFlightNumber
+        _isTextAlphaAnimation.value  = Event(Unit)
+    }
+
+    fun setPhotoPage(set: Boolean){
+        _isPhotoPage.value = set
+    }
 
     fun onRedditButtonClicked() {
         this.launch.value?.let {
@@ -52,30 +69,5 @@ class LaunchDetailViewModel(application: Application) :
         this.launch.value?.let {
             _navigateTo.value = Event(it.links.wikipedia)
         }
-    }
-
-    fun start(launchFlightNumber: String?) {
-        // If we're already loading or already loaded, return (might be a config change)
-        if (dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
-            return
-        }
-        // Trigger the load
-        _launchFlightNumber.value = launchFlightNumber
-    }
-
-    fun setPhotoPage(set: Boolean){
-        _isPhotoPage.value = set
-    }
-
-
-
-    private var _isScrollerAlphaAnimation = MutableLiveData<Boolean>().apply {
-        value = true
-    }
-    val isScrollerAlphaAnimation: LiveData<Boolean>
-        get() = _isScrollerAlphaAnimation
-
-    fun onScrollerAlphaAnimated(){
-        _isScrollerAlphaAnimation.value = false
     }
 }

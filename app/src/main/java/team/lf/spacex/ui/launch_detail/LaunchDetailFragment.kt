@@ -20,7 +20,7 @@ private const val ARG_SECTION_NUMBER = "section_number"
 const val ARG_LAUNCH_FLIGHT_NUMBER = "launch"
 
 
-class PlaceHolderFragment : Fragment() {
+class LaunchDetailFragment : Fragment() {
 
     companion object {
         /**
@@ -28,8 +28,8 @@ class PlaceHolderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int, launch: Launch): PlaceHolderFragment {
-            return PlaceHolderFragment().apply {
+        fun newInstance(sectionNumber: Int, launch: Launch): LaunchDetailFragment {
+            return LaunchDetailFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
                     putString(ARG_LAUNCH_FLIGHT_NUMBER, launch.flight_number)
@@ -58,26 +58,12 @@ class PlaceHolderFragment : Fragment() {
             viewmodel = viewModel
             recycler.adapter = adapter
         }
-
-        //Жена сказала, что с такой анимацией красивее =)
-        viewModel.isScrollerAlphaAnimation.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                viewBinding.scroller.alpha = 0f
-                ObjectAnimator.ofFloat(viewBinding.scroller, View.ALPHA, 1f).apply {
-                    startDelay = 1000
-                    duration = 1000
-                }.start()
-                viewModel.onScrollerAlphaAnimated()
-            }
-        })
-
         when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
             1 -> viewModel.setPhotoPage(false)
             2 -> viewModel.setPhotoPage(true)
-            else -> throw IllegalStateException()
+            else -> throw IllegalStateException("wrong argument")
         }
         return viewBinding.root
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -93,6 +79,13 @@ class PlaceHolderFragment : Fragment() {
             it?.let {
                 adapter.submitListAsync(it)
             }
+        })
+        viewModel.isTextAlphaAnimation.observe(viewLifecycleOwner, EventObserver {
+                viewBinding.scroller.alpha = 0f
+                ObjectAnimator.ofFloat(viewBinding.scroller, View.ALPHA, 1f).apply {
+                    startDelay = 1000
+                    duration = 500
+                }.start()
         })
     }
 
