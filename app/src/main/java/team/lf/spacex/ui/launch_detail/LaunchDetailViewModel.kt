@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.database.getDatabase
@@ -27,7 +26,8 @@ class LaunchDetailViewModel(application: Application) :
     }
     val launch: LiveData<Launch?> = _launch
 
-    val isDataAvailable: LiveData<Boolean> = map(_launch){ it != null }
+    private val _isPhotoPage = MutableLiveData<Boolean>()
+    val isPhotoPage: LiveData<Boolean> = _isPhotoPage
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -71,11 +71,15 @@ class LaunchDetailViewModel(application: Application) :
 
     fun start(launchFlightNumber: String?) {
         // If we're already loading or already loaded, return (might be a config change)
-        if (_dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
+        if (dataLoading.value == true || launchFlightNumber == _launchFlightNumber.value) {
             return
         }
         // Trigger the load
         _launchFlightNumber.value = launchFlightNumber
+    }
+
+    fun setPhotoPage(set: Boolean){
+        _isPhotoPage.value = set
     }
 
 

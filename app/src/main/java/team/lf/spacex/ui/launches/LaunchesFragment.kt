@@ -55,7 +55,7 @@ class LaunchesFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        viewModel.openLaunchEvent.observe(this,
+        viewModel.openLaunchEvent.observe(viewLifecycleOwner,
             EventObserver {
                 openLaunch(it)
             })

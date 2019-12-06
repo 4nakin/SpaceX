@@ -22,6 +22,7 @@ fun ImageView.setImage(imgUrl: String?) {
                 RequestOptions()
                     .apply(
                         RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
                             .error(R.drawable.ic_broken_image))
             )
             .into(this)

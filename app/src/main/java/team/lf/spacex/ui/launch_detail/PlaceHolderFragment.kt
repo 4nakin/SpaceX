@@ -8,14 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import team.lf.spacex.R
-import team.lf.spacex.databinding.FragmentLaunchDetailsPagePhotosBinding
-import team.lf.spacex.databinding.FragmentLaunchDetailsPageTextBinding
 import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
 import timber.log.Timber
 
 private const val ARG_SECTION_NUMBER = "section_number"
@@ -42,6 +39,10 @@ class PlaceHolderFragment : Fragment() {
 
     private val viewModel by viewModels<LaunchDetailViewModel>()
 
+    private lateinit var viewBinding: FragmentLaunchDetailsPageBinding
+
+    private lateinit var adapter: FlickrImagesAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,45 +51,36 @@ class PlaceHolderFragment : Fragment() {
         viewModel.start(arguments!!.getString(ARG_LAUNCH_FLIGHT_NUMBER))
         Timber.d("fragment created")
 
+        adapter = FlickrImagesAdapter()
+        viewBinding = FragmentLaunchDetailsPageBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewModel
+            recycler.adapter = adapter
+        }
+
+        //Жена сказала, что с такой анимацией красивее =)
+        viewModel.isScrollerAlphaAnimation.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewBinding.scroller.alpha = 0f
+                ObjectAnimator.ofFloat(viewBinding.scroller, View.ALPHA, 1f).apply {
+                    startDelay = 1000
+                    duration = 1000
+                }.start()
+                viewModel.onScrollerAlphaAnimated()
+            }
+        })
+
         //todo refactor this logic to using only one binding with VISIBLE GONE
         when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
             1 -> {
-                val binding: FragmentLaunchDetailsPageTextBinding = DataBindingUtil.inflate(
-                    inflater, R.layout.fragment_launch_details_page_text, container, false
-                )
-                binding.viewModel = viewModel
-                binding.lifecycleOwner = viewLifecycleOwner
-
-                //Жена сказала, что с такой анимацией красивее =)
-                viewModel.isScrollerAlphaAnimation.observe(viewLifecycleOwner, Observer {
-                    if (it) {
-                        binding.scroller.alpha = 0f
-                        ObjectAnimator.ofFloat(binding.scroller, View.ALPHA, 1f).apply {
-                            startDelay = 1000
-                            duration = 1000
-                        }.start()
-                        viewModel.onScrollerAlphaAnimated()
-                    }
-                })
-                return binding.root
+                viewModel.setPhotoPage(false)
             }
             2 -> {
-                val binding: FragmentLaunchDetailsPagePhotosBinding = DataBindingUtil.inflate(
-                    inflater, R.layout.fragment_launch_details_page_photos, container, false
-                )
-                binding.viewModel = viewModel
-                binding.lifecycleOwner = viewLifecycleOwner
-                val adapter = FlickrImagesAdapter()
-                binding.recycler.adapter = adapter
-                viewModel.launch.observe(viewLifecycleOwner, Observer {
-                    it?.let{
-                        adapter.submitListAsync(it)
-                    }
-                })
-                return binding.root
+                viewModel.setPhotoPage(true)
             }
             else -> throw IllegalStateException()
         }
+        return viewBinding.root
 
     }
 
@@ -102,6 +94,11 @@ class PlaceHolderFragment : Fragment() {
                 } else {
                     Toast.makeText(activity, "Empty path", Toast.LENGTH_LONG).show()
                 }
+            }
+        })
+        viewModel.launch.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.submitListAsync(it)
             }
         })
     }
