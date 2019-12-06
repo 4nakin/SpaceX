@@ -70,7 +70,6 @@ class PlaceHolderFragment : Fragment() {
             }
         })
 
-        //todo refactor this logic to using only one binding with VISIBLE GONE
         when (arguments!!.getInt(ARG_SECTION_NUMBER)) {
             1 -> {
                 viewModel.setPhotoPage(false)
