@@ -36,16 +36,16 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
     fun refreshAllLaunchesFromRepository() {
 
         viewModelScope.launch {
+            _dataLoading.value = true
             try {
-                _dataLoading.value = true
                 repository.refreshAllLaunches()
                 _networkErrorEvent.value = Event(false)
                 _dataLoading.value = false
 
             } catch (networkError: IOException) {
                 _networkErrorEvent.value = Event(true)
-                _dataLoading.value = false
             }
+            _dataLoading.value = false
         }
     }
 
