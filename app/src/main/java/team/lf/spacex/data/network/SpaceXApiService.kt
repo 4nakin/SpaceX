@@ -1,6 +1,7 @@
 package team.lf.spacex.data.network
 
 import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 
 /**
@@ -12,6 +13,6 @@ interface SpaceXApiService {
     }
 
     @GET("launches")
-    fun getLaunchesAsync(): Deferred<List<Launch>>
+    fun getLaunchesAsync(): Deferred<Response<List<Launch>>>
 }
 

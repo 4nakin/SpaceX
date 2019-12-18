@@ -20,7 +20,7 @@ import javax.inject.Singleton
 class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
     private val service: SpaceXApiService
-) {
+):BaseRepository() {
 
     val allLaunches: LiveData<List<Launch>> =
         Transformations.map(database.spaceXDao.getAllLaunches()) {
@@ -30,8 +30,14 @@ class SpaceXRepository @Inject constructor(
 
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
-            val allLaunches = service.getLaunchesAsync().await()
-            database.spaceXDao.insertAll(allLaunches.asDatabaseModels())
+//            val allLaunches = service.getLaunchesAsync().await()
+            val launchesResponse = safeApiCall(
+                call = {service.getLaunchesAsync().await()},
+                errorMessage = "Error fetching launches"
+            )
+            launchesResponse?.let {
+                database.spaceXDao.insertAll(it.asDatabaseModels())
+            }
         }
     }
 
