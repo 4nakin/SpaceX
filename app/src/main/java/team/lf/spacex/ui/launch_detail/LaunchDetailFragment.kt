@@ -11,16 +11,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
 import timber.log.Timber
+import javax.inject.Inject
 
 private const val ARG_SECTION_NUMBER = "section_number"
 const val ARG_LAUNCH_FLIGHT_NUMBER = "launch"
 
 
-class LaunchDetailFragment : Fragment() {
+class LaunchDetailFragment : DaggerFragment() {
 
     companion object {
         /**
@@ -38,7 +41,10 @@ class LaunchDetailFragment : Fragment() {
         }
     }
 
-    private val viewModel by viewModels<LaunchDetailViewModel>()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<LaunchDetailViewModel>{viewModelFactory}
 
     private lateinit var viewBinding: FragmentLaunchDetailsPageBinding
 
