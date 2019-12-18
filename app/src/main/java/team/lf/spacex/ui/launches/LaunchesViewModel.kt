@@ -1,22 +1,18 @@
 package team.lf.spacex.ui.launches
 
-import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import team.lf.spacex.data.Event
-import team.lf.spacex.data.database.getDatabase
 import team.lf.spacex.data.domain.Launch
-import team.lf.spacex.data.network.SpaceXApi
 import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
+import javax.inject.Inject
 
-class LaunchesViewModel(application: Application) : AndroidViewModel(application) {
+class LaunchesViewModel @Inject constructor(private val repository: SpaceXRepository) : ViewModel() {
 
-    private val repository = SpaceXRepository(
-        getDatabase(
-            application.applicationContext
-        ), SpaceXApi.retrofitService
-    )
 
     private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
     val allLaunches = _allLaunches

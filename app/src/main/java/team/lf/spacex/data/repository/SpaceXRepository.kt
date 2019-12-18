@@ -8,17 +8,17 @@ import team.lf.spacex.data.database.SpaceXDatabase
 import team.lf.spacex.data.database.asDomainLaunchModel
 import team.lf.spacex.data.database.asDomainModels
 import team.lf.spacex.data.domain.Launch
-import team.lf.spacex.data.network.SpaceXApi
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
+import javax.inject.Inject
 
-class SpaceXRepository(
+class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
     private val service: SpaceXApiService
 ) {
 
     val allLaunches: LiveData<List<Launch>> =
-        Transformations.map(database.SpaceXDao.getAllLaunches()) {
+        Transformations.map(database.spaceXDao.getAllLaunches()) {
             it.asDomainModels()
         }
 
@@ -26,13 +26,13 @@ class SpaceXRepository(
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
             val allLaunches = service.getLaunchesAsync().await()
-            database.SpaceXDao.insertAll(allLaunches.asDatabaseModels())
+            database.spaceXDao.insertAll(allLaunches.asDatabaseModels())
         }
     }
 
     fun getLaunchByFlightNumberFromDatabase(flightNumber: String)
             : LiveData<Launch> {
-        return Transformations.map(database.SpaceXDao.getLaunchByFlightNumber(flightNumber)) {
+        return Transformations.map(database.spaceXDao.getLaunchByFlightNumber(flightNumber)) {
             it.asDomainLaunchModel()
         }
     }

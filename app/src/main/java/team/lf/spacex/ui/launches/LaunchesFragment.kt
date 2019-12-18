@@ -6,19 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.setupRefreshLayout
 import timber.log.Timber
+import javax.inject.Inject
 
-class LaunchesFragment : Fragment() {
+class LaunchesFragment : DaggerFragment() {
 
     private lateinit var viewDataBinding: FragmentAllLaunchesBinding
 
-    private val viewModel by viewModels<LaunchesViewModel>()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<LaunchesViewModel>{viewModelFactory}
 
     private lateinit var listAdapter: LaunchesAdapter
 

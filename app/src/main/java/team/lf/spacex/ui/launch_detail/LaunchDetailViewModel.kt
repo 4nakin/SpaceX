@@ -1,25 +1,17 @@
 package team.lf.spacex.ui.launch_detail
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.ViewModel
 import team.lf.spacex.data.Event
-import team.lf.spacex.data.database.getDatabase
 import team.lf.spacex.data.domain.Launch
-import team.lf.spacex.data.network.SpaceXApi
 import team.lf.spacex.data.repository.SpaceXRepository
+import javax.inject.Inject
 
 
-class LaunchDetailViewModel(application: Application) :
-    AndroidViewModel(application) {
-
-    private val repository = SpaceXRepository(
-        getDatabase(
-            application.applicationContext
-        ), SpaceXApi.retrofitService
-    )
+class LaunchDetailViewModel @Inject constructor(private val repository: SpaceXRepository) :
+    ViewModel() {
 
     private val _launchFlightNumber = MutableLiveData<String>()
     private val _launch = switchMap(_launchFlightNumber){
