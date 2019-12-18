@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.database.getDatabase
 import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.network.SpaceXApi
 import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
 
@@ -14,7 +15,7 @@ class LaunchesViewModel(application: Application) : AndroidViewModel(application
     private val repository = SpaceXRepository(
         getDatabase(
             application.applicationContext
-        )
+        ), SpaceXApi.retrofitService
     )
 
     private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
