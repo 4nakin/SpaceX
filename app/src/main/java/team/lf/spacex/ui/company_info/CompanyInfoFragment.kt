@@ -8,6 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import team.lf.spacex.R
 
+/**
+ * Main UI for the CompanyInfo screen.
+ *
+ * isn't done!
+ */
+
 class CompanyInfoFragment : Fragment() {
 
 

@@ -18,7 +18,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         LaunchesModule::class,
-        LauncheDetailModule::class
+        LaunchesDetailModule::class
     ]
 )
 interface AppComponent : AndroidInjector<SpaceXApp> {

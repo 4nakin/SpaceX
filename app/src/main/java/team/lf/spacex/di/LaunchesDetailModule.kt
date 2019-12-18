@@ -9,10 +9,10 @@ import team.lf.spacex.ui.launch_detail.LaunchDetailFragment
 import team.lf.spacex.ui.launch_detail.LaunchDetailViewModel
 
 /**
- * Dagger module for the details.
+ * Dagger module for the launch details.
  */
 @Module
-abstract class LauncheDetailModule {
+abstract class LaunchesDetailModule {
     @ContributesAndroidInjector(modules = [
         ViewModelBuilder::class
     ])

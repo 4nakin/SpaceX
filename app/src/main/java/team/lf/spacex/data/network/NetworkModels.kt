@@ -1,5 +1,9 @@
 package team.lf.spacex.data.network
 
+
+/**
+ * Models from api
+ */
 data class Launch(
     val crew: List<String>?,
     val details: String?,

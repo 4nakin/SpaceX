@@ -3,6 +3,9 @@ package team.lf.spacex.data.domain
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Models for representing in ui
+ */
 @Parcelize
 data class Launch(
     val details: String,

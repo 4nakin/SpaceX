@@ -4,21 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
+/**
+ * Data Access Object for the launches table.
+ */
 @Dao
-interface SpaceXDao{
+interface SpaceXDao {
     @Query("select * from launches")
-    fun getAllLaunches():LiveData<List<Launch>>
+    fun getAllLaunches(): LiveData<List<Launch>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(launches: List<Launch>)
 
     @Query("select * from launches where flight_number = :flightNumber")
-    fun getLaunchByFlightNumber(flightNumber:String): LiveData<Launch>
+    fun getLaunchByFlightNumber(flightNumber: String): LiveData<Launch>
 
 }
 
+/**
+ * The Room Database that contains the Lunch table.
+ **/
 @Database(entities = [Launch::class], version = 1)
-abstract class SpaceXDatabase:RoomDatabase(){
+abstract class SpaceXDatabase : RoomDatabase() {
     abstract val spaceXDao: SpaceXDao
 }
 

@@ -11,7 +11,12 @@ import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
 import javax.inject.Inject
+import javax.inject.Singleton
 
+/**
+ * Repository module for handling data operations.
+ */
+@Singleton
 class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
     private val service: SpaceXApiService

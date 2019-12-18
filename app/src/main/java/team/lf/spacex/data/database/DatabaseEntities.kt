@@ -4,6 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Models for store in db
+ */
 @Entity(tableName = "launches")
 data class Launch(
     val details: String,

@@ -5,11 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
+/**
+ * ViewModel for the CompanyInfo fragment.
+ *
+ * isn't done!
+ */
+
 class CompanyInfoViewModel(app: Application) : AndroidViewModel(app) {
-
-
-
-
 
     class Factory(private val app: Application) :
         ViewModelProvider.Factory {
