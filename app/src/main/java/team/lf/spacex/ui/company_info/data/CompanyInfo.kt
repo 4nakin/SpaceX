@@ -4,7 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
+/**
+ * These models are used as network , db and representing models
+ * */
 @Entity
 data class CompanyInfo(
     @PrimaryKey
@@ -13,7 +15,7 @@ data class CompanyInfo(
     val cto: String,
     val cto_propulsion: String,
     val employees: Int,
-    val founded: Int,
+    val founded: String,
     val founder: String,
     @Embedded val headquarters: Headquarters,
     val launch_sites: Int,
@@ -22,7 +24,8 @@ data class CompanyInfo(
     val summary: String,
     val test_sites: Int,
     val valuation: Long,
-    val vehicles: Int
+    val vehicles: Int,
+    val mask_photo: String = "https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society.jpg"
 )
 
 data class Headquarters(

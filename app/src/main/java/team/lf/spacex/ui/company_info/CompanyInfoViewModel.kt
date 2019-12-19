@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.repository.SpaceXRepository
+import team.lf.spacex.ui.company_info.data.CompanyInfo
 import java.io.IOException
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRep
     ViewModel() {
 
     private val _companyInfo = repository.companyInfo
-    val companyInfo = _companyInfo
+    val companyInfo: LiveData<CompanyInfo> = _companyInfo
 
     private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
     val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
