@@ -4,6 +4,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import team.lf.spacex.ui.company_info.data.CompanyInfo
+import team.lf.spacex.ui.company_info.data.HistoryEvent
 
 /**
  * SpaceX REST API access points
@@ -17,6 +18,9 @@ interface SpaceXApiService {
     fun getLaunchesAsync(): Deferred<Response<List<Launch>>>
 
     @GET("info")
-    fun getCompanyInfo():Deferred<Response<CompanyInfo>>
+    fun getCompanyInfoAsync():Deferred<Response<CompanyInfo>>
+
+    @GET("history")
+    fun getLHistoryEventsAsync(): Deferred<Response<List<HistoryEvent>>>
 }
 

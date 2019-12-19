@@ -16,4 +16,5 @@
     <string name="mask_photo">https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society.jpg</string>
     <string name="founder">Founder:</string>
     <string name="founded">Founded:</string>
+    <string name="history">History</string>
 </resources>

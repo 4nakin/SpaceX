@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.repository.SpaceXRepository
 import team.lf.spacex.ui.company_info.data.CompanyInfo
+import team.lf.spacex.ui.company_info.data.HistoryEvent
 import java.io.IOException
 import javax.inject.Inject
 
@@ -25,6 +24,10 @@ class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRep
     private val _companyInfo = repository.companyInfo
     val companyInfo: LiveData<CompanyInfo> = _companyInfo
 
+    private val _historyEvents = repository.historyEvents
+    val historyEvents: LiveData<List<HistoryEvent>> = _historyEvents
+
+
     private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
     val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
 
@@ -32,14 +35,17 @@ class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRep
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     init {
-        refreshCompanyInfo()
+        refreshData()
     }
 
-    private fun refreshCompanyInfo() {
+
+
+    private fun refreshData() {
         viewModelScope.launch {
             _dataLoading.value = true
             try {
                 repository.refreshCompanyInfo()
+                repository.refreshHistory()
                 _networkErrorEvent.value = Event(false)
                 _dataLoading.value = false
             } catch (networkError: IOException) {

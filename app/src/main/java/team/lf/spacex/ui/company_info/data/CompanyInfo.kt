@@ -25,6 +25,7 @@ data class CompanyInfo(
     val test_sites: Int,
     val valuation: Long,
     val vehicles: Int,
+    //photo from wikipedia
     val mask_photo: String = "https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society.jpg"
 )
 

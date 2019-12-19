@@ -11,6 +11,7 @@ import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
 import team.lf.spacex.ui.company_info.data.CompanyInfo
+import team.lf.spacex.ui.company_info.data.HistoryEvent
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,10 +28,6 @@ class SpaceXRepository @Inject constructor(
         Transformations.map(database.spaceXDao.getAllLaunches()) {
             it.asDomainModels()
         }
-
-    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
-
-
 
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
@@ -51,14 +48,30 @@ class SpaceXRepository @Inject constructor(
         }
     }
 
+    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
+
     suspend fun refreshCompanyInfo(){
         withContext(Dispatchers.IO){
             val companyInfo = safeApiCall(
-                call = {service.getCompanyInfo().await()},
+                call = {service.getCompanyInfoAsync().await()},
                 errorMessage = "Error fetching companyInfo"
             )
             companyInfo?.let {
                 database.spaceXDao.insertCompanyInfo(it)
+            }
+        }
+    }
+
+    val historyEvents: LiveData<List<HistoryEvent>> = database.spaceXDao.getHistoryEvents()
+
+    suspend fun refreshHistory(){
+        withContext(Dispatchers.IO){
+            val historyEvents = safeApiCall(
+                call = {service.getLHistoryEventsAsync().await()},
+                errorMessage = "Error fetching historyEvents"
+            )
+            historyEvents?.let {
+                database.spaceXDao.insertHistoryEvent(it)
             }
         }
     }
