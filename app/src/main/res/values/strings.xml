@@ -11,4 +11,5 @@
     <string name="company_info">Company info</string>
 
     <string name="all_launches_fragment_title">All launches</string>
+    <string name="navigation_view_header_title">SpaceX</string>
 </resources>
