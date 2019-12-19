@@ -18,6 +18,3 @@ fun Fragment.setupRefreshLayout(
         refreshLayout.scrollUpChild = it
     }
 }
-
-//Mask photo
-//https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society.jpg

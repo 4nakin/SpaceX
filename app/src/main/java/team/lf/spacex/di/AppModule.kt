@@ -19,7 +19,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideDataBase ( context: Context): SpaceXDatabase{
+    fun provideDataBase(context: Context): SpaceXDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
             SpaceXDatabase::class.java,
@@ -29,10 +29,10 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesMoshi(): Moshi =  Moshi.Builder()
+    fun providesMoshi(): Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-    
+
     @Singleton
     @Provides
     fun providesRetrofit(moshi: Moshi) = Retrofit.Builder()
@@ -40,9 +40,9 @@ class AppModule {
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(SpaceXApiService.BASE_URL)
         .build()
-    
+
     @Singleton
     @Provides
     fun providesService(retrofit: Retrofit) = retrofit.create(SpaceXApiService::class.java)
-    
+
 }

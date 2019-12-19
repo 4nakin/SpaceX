@@ -13,10 +13,12 @@ import team.lf.spacex.ui.launch_detail.LaunchDetailViewModel
  */
 @Module
 abstract class LaunchesDetailModule {
-    @ContributesAndroidInjector(modules = [
-        ViewModelBuilder::class
-    ])
-    internal abstract fun launchesDetailFragment() : LaunchDetailFragment
+    @ContributesAndroidInjector(
+        modules = [
+            ViewModelBuilder::class
+        ]
+    )
+    internal abstract fun launchesDetailFragment(): LaunchDetailFragment
 
     @Binds
     @IntoMap

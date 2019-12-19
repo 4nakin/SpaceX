@@ -17,7 +17,8 @@ data class Launch(
     val links: Links,
     val mission_id: List<String>,
     val mission_name: String
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class Links(
     val article_link: String,
@@ -27,12 +28,12 @@ data class Links(
     val reddit_campaign: String,
     val video_link: String,
     val wikipedia: String
-):Parcelable
+) : Parcelable
 
 @Parcelize
 data class LaunchSite(
     val site_name: String,
     val site_name_long: String
-):Parcelable
+) : Parcelable
 
 data class FlickrImage(val url: String)

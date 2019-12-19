@@ -11,6 +11,7 @@ import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
 import team.lf.spacex.ui.company_info.data.CompanyInfo
+import team.lf.spacex.ui.company_info.data.HistoryEvent
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,21 +22,17 @@ import javax.inject.Singleton
 class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
     private val service: SpaceXApiService
-):BaseRepository() {
+) : BaseRepository() {
 
     val allLaunches: LiveData<List<Launch>> =
         Transformations.map(database.spaceXDao.getAllLaunches()) {
             it.asDomainModels()
         }
 
-    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
-
-
-
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
             val launchesResponse = safeApiCall(
-                call = {service.getLaunchesAsync().await()},
+                call = { service.getLaunchesAsync().await() },
                 errorMessage = "Error fetching launches"
             )
             launchesResponse?.let {
@@ -51,10 +48,12 @@ class SpaceXRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshCompanyInfo(){
-        withContext(Dispatchers.IO){
+    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
+
+    suspend fun refreshCompanyInfo() {
+        withContext(Dispatchers.IO) {
             val companyInfo = safeApiCall(
-                call = {service.getCompanyInfo().await()},
+                call = { service.getCompanyInfoAsync().await() },
                 errorMessage = "Error fetching companyInfo"
             )
             companyInfo?.let {
@@ -63,8 +62,19 @@ class SpaceXRepository @Inject constructor(
         }
     }
 
+    val historyEvents: LiveData<List<HistoryEvent>> = database.spaceXDao.getHistoryEvents()
 
-
+    suspend fun refreshHistory() {
+        withContext(Dispatchers.IO) {
+            val historyEvents = safeApiCall(
+                call = { service.getLHistoryEventsAsync().await() },
+                errorMessage = "Error fetching historyEvents"
+            )
+            historyEvents?.let {
+                database.spaceXDao.insertHistoryEvent(it)
+            }
+        }
+    }
 
 
 }

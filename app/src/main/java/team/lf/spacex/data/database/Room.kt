@@ -3,6 +3,7 @@ package team.lf.spacex.data.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import team.lf.spacex.ui.company_info.data.CompanyInfo
+import team.lf.spacex.ui.company_info.data.HistoryEvent
 
 
 /**
@@ -25,12 +26,18 @@ interface SpaceXDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCompanyInfo(companyInfo: CompanyInfo)
 
+    @Query("select * from historyevent")
+    fun getHistoryEvents(): LiveData<List<HistoryEvent>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertHistoryEvent(historyEvents: List<HistoryEvent>)
+
 }
 
 /**
  * The Room Database that contains the Lunch table.
  **/
-@Database(entities = [Launch::class, CompanyInfo::class], version = 1)
+@Database(entities = [Launch::class, CompanyInfo::class, HistoryEvent::class], version = 1)
 abstract class SpaceXDatabase : RoomDatabase() {
     abstract val spaceXDao: SpaceXDao
 }

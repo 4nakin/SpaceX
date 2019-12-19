@@ -5,26 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.ItemLaunchBinding
 
 
 class LaunchesAdapter(private val viewModel: LaunchesViewModel) :
     ListAdapter<Launch, LaunchesAdapter.LaunchesViewHolder>(LaunchesDiffCallback()) {
-
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
-
-    fun submitLaunchListAsync(list: List<Launch>?) {
-        adapterScope.launch {
-            withContext(Dispatchers.Main) {
-                submitList(list)
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchesViewHolder {
         return LaunchesViewHolder.from(parent)
