@@ -11,7 +11,8 @@ import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
 import javax.inject.Inject
 
-class LaunchesViewModel @Inject constructor(private val repository: SpaceXRepository) : ViewModel() {
+class LaunchesViewModel @Inject constructor(private val repository: SpaceXRepository) :
+    ViewModel() {
 
 
     private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches

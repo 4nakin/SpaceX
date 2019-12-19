@@ -16,7 +16,6 @@ import javax.inject.Inject
 /**
  * Main UI for the CompanyInfo screen.
  *
- * isn't done!
  */
 
 class CompanyInfoFragment : DaggerFragment() {

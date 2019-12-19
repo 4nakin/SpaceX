@@ -33,36 +33,38 @@ fun ImageView.setImage(imgUrl: String?) {
                     .apply(
                         RequestOptions()
                             .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_broken_image))
+                            .error(R.drawable.ic_broken_image)
+                    )
             )
             .into(this)
     }
 }
 
 @BindingAdapter("shortDetails")
-fun TextView.setShortDetails(detailsText:String?){
+fun TextView.setShortDetails(detailsText: String?) {
     detailsText?.let {
         this.text = shortText(50, it)
     }
 }
 
 @BindingAdapter("shortMissionName")
-fun TextView.setShortMissionName(missionName:String?){
+fun TextView.setShortMissionName(missionName: String?) {
     missionName?.let {
         text = shortText(15, it)
     }
 }
-fun shortText(maxSize:Int, text:String):String{
-    val resultText= StringBuilder()
+
+fun shortText(maxSize: Int, text: String): String {
+    val resultText = StringBuilder()
     resultText.append(text.take(maxSize))
-    if (text.length>maxSize){
+    if (text.length > maxSize) {
         resultText.append("...")
     }
     return resultText.toString()
 }
 
 @BindingAdapter("unixToDate")
-fun TextView.setUnixDate(unix:String?){
+fun TextView.setUnixDate(unix: String?) {
     unix?.let {
         text = it.toLong().dateToString()
     }

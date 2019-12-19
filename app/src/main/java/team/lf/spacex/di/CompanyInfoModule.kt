@@ -16,10 +16,12 @@ import team.lf.spacex.ui.launches.LaunchesViewModel
  */
 @Module
 abstract class CompanyInfoModule {
-    @ContributesAndroidInjector(modules = [
-        ViewModelBuilder::class
-    ])
-    internal abstract fun companyInfoFragment() :CompanyInfoFragment
+    @ContributesAndroidInjector(
+        modules = [
+            ViewModelBuilder::class
+        ]
+    )
+    internal abstract fun companyInfoFragment(): CompanyInfoFragment
 
     @Binds
     @IntoMap

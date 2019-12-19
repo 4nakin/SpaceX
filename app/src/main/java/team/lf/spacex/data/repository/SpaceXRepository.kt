@@ -22,7 +22,7 @@ import javax.inject.Singleton
 class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
     private val service: SpaceXApiService
-):BaseRepository() {
+) : BaseRepository() {
 
     val allLaunches: LiveData<List<Launch>> =
         Transformations.map(database.spaceXDao.getAllLaunches()) {
@@ -32,7 +32,7 @@ class SpaceXRepository @Inject constructor(
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
             val launchesResponse = safeApiCall(
-                call = {service.getLaunchesAsync().await()},
+                call = { service.getLaunchesAsync().await() },
                 errorMessage = "Error fetching launches"
             )
             launchesResponse?.let {
@@ -50,10 +50,10 @@ class SpaceXRepository @Inject constructor(
 
     val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
 
-    suspend fun refreshCompanyInfo(){
-        withContext(Dispatchers.IO){
+    suspend fun refreshCompanyInfo() {
+        withContext(Dispatchers.IO) {
             val companyInfo = safeApiCall(
-                call = {service.getCompanyInfoAsync().await()},
+                call = { service.getCompanyInfoAsync().await() },
                 errorMessage = "Error fetching companyInfo"
             )
             companyInfo?.let {
@@ -64,10 +64,10 @@ class SpaceXRepository @Inject constructor(
 
     val historyEvents: LiveData<List<HistoryEvent>> = database.spaceXDao.getHistoryEvents()
 
-    suspend fun refreshHistory(){
-        withContext(Dispatchers.IO){
+    suspend fun refreshHistory() {
+        withContext(Dispatchers.IO) {
             val historyEvents = safeApiCall(
-                call = {service.getLHistoryEventsAsync().await()},
+                call = { service.getLHistoryEventsAsync().await() },
                 errorMessage = "Error fetching historyEvents"
             )
             historyEvents?.let {
@@ -75,9 +75,6 @@ class SpaceXRepository @Inject constructor(
             }
         }
     }
-
-
-
 
 
 }

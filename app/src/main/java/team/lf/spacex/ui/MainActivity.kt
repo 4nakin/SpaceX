@@ -1,13 +1,14 @@
 package team.lf.spacex.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 import team.lf.spacex.R
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             AppBarConfiguration.Builder(R.id.launchesFragment, R.id.companyInfoFragment)
                 .setDrawerLayout(drawerLayout)
                 .build()
-        setupActionBarWithNavController( navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         findViewById<NavigationView>(R.id.navView)
             .setupWithNavController(navController)
     }

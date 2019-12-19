@@ -15,7 +15,6 @@ import javax.inject.Inject
 /**
  * ViewModel for the CompanyInfo fragment.
  *
- * isn't done!
  */
 
 class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRepository) :
@@ -37,7 +36,6 @@ class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRep
     init {
         refreshData()
     }
-
 
 
     private fun refreshData() {

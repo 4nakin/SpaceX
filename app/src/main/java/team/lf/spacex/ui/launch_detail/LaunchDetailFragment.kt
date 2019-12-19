@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -44,7 +43,7 @@ class LaunchDetailFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<LaunchDetailViewModel>{viewModelFactory}
+    private val viewModel by viewModels<LaunchDetailViewModel> { viewModelFactory }
 
     private lateinit var viewBinding: FragmentLaunchDetailsPageBinding
 
@@ -87,11 +86,11 @@ class LaunchDetailFragment : DaggerFragment() {
             }
         })
         viewModel.isTextAlphaAnimation.observe(viewLifecycleOwner, EventObserver {
-                viewBinding.scroller.alpha = 0f
-                ObjectAnimator.ofFloat(viewBinding.scroller, View.ALPHA, 1f).apply {
-                    startDelay = 1000
-                    duration = 500
-                }.start()
+            viewBinding.scroller.alpha = 0f
+            ObjectAnimator.ofFloat(viewBinding.scroller, View.ALPHA, 1f).apply {
+                startDelay = 1000
+                duration = 500
+            }.start()
         })
     }
 

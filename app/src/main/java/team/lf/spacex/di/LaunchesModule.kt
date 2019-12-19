@@ -14,10 +14,12 @@ import team.lf.spacex.ui.launches.LaunchesViewModel
  */
 @Module
 abstract class LaunchesModule {
-    @ContributesAndroidInjector(modules = [
-        ViewModelBuilder::class
-    ])
-    internal abstract fun launchesFragment() :LaunchesFragment
+    @ContributesAndroidInjector(
+        modules = [
+            ViewModelBuilder::class
+        ]
+    )
+    internal abstract fun launchesFragment(): LaunchesFragment
 
     @Binds
     @IntoMap
