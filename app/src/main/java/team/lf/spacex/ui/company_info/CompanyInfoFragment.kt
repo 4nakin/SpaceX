@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import team.lf.spacex.R
-import team.lf.spacex.databinding.FragmentAllLaunchesBinding
+import team.lf.spacex.data.EventObserver
 import team.lf.spacex.databinding.FragmentCompanyInfoBinding
-import team.lf.spacex.setupRefreshLayout
-import team.lf.spacex.ui.launches.LaunchesViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -32,6 +29,8 @@ class CompanyInfoFragment : DaggerFragment() {
 
     private val viewModel by viewModels<CompanyInfoViewModel> { viewModelFactory }
 
+    private lateinit var eventsAdapter: EventsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +45,29 @@ class CompanyInfoFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
+        setupEventsAdapter()
+        setupNetworkErrorEvent()
+
     }
 
+    private fun setupNetworkErrorEvent() {
+        viewModel.networkErrorEvent.observe(viewLifecycleOwner,
+            EventObserver {
+                if (it) {
+                    Snackbar.make(viewDataBinding.root, "Network Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            })
+    }
+
+    private fun setupEventsAdapter() {
+        val viewModel = viewDataBinding.viewmodel
+        if (viewModel != null) {
+            eventsAdapter = EventsAdapter()
+            viewDataBinding.historyList.adapter = eventsAdapter
+        } else {
+            Timber.w("ViewModel not initialized when attempting to set up adapter.")
+        }
+
+    }
 }

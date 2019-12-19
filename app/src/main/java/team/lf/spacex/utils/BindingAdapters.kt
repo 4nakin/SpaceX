@@ -4,12 +4,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import team.lf.spacex.R
 import java.text.SimpleDateFormat
 import java.util.*
+
+@Suppress("unchecked_cast")
+@BindingAdapter("app:items")
+fun <T> setItems(listView: RecyclerView, items: List<T>?) {
+    items?.let {
+        (listView.adapter as ListAdapter<T, *>).submitList(it)
+    }
+}
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImage(imgUrl: String?) {

@@ -16,16 +16,6 @@ import team.lf.spacex.databinding.ItemLaunchBinding
 class LaunchesAdapter(private val viewModel: LaunchesViewModel) :
     ListAdapter<Launch, LaunchesAdapter.LaunchesViewHolder>(LaunchesDiffCallback()) {
 
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
-
-    fun submitLaunchListAsync(list: List<Launch>?) {
-        adapterScope.launch {
-            withContext(Dispatchers.Main) {
-                submitList(list)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchesViewHolder {
         return LaunchesViewHolder.from(parent)
     }
