@@ -10,6 +10,7 @@ import team.lf.spacex.data.database.asDomainModels
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
+import team.lf.spacex.ui.company_info.data.CompanyInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,10 +28,12 @@ class SpaceXRepository @Inject constructor(
             it.asDomainModels()
         }
 
+    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
+
+
 
     suspend fun refreshAllLaunches() {
         withContext(Dispatchers.IO) {
-//            val allLaunches = service.getLaunchesAsync().await()
             val launchesResponse = safeApiCall(
                 call = {service.getLaunchesAsync().await()},
                 errorMessage = "Error fetching launches"
@@ -47,5 +50,21 @@ class SpaceXRepository @Inject constructor(
             it.asDomainLaunchModel()
         }
     }
+
+    suspend fun refreshCompanyInfo(){
+        withContext(Dispatchers.IO){
+            val companyInfo = safeApiCall(
+                call = {service.getCompanyInfo().await()},
+                errorMessage = "Error fetching companyInfo"
+            )
+            companyInfo?.let {
+                database.spaceXDao.insertCompanyInfo(it)
+            }
+        }
+    }
+
+
+
+
 
 }

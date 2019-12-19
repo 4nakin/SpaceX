@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/settingsFragment"
-        android:title="@string/company_info" />
+        android:id="@id/launchesFragment"
+        android:title="@string/launches" />
     <item
-        android:id="@+id/aboutFragment"
-        android:title="@string/about" />
+        android:id="@id/companyInfoFragment"
+        android:title="@string/company_info" />
 </menu>

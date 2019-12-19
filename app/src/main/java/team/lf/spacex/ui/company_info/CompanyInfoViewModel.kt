@@ -1,9 +1,16 @@
 package team.lf.spacex.ui.company_info
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import team.lf.spacex.data.Event
+import team.lf.spacex.data.repository.SpaceXRepository
+import java.io.IOException
+import javax.inject.Inject
 
 /**
  * ViewModel for the CompanyInfo fragment.
@@ -11,16 +18,34 @@ import androidx.lifecycle.ViewModelProvider
  * isn't done!
  */
 
-class CompanyInfoViewModel(app: Application) : AndroidViewModel(app) {
+class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRepository) :
+    ViewModel() {
 
-    class Factory(private val app: Application) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CompanyInfoViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return CompanyInfoViewModel(app) as T
+    private val _companyInfo = repository.companyInfo
+    val companyInfo = _companyInfo
+
+    private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
+    val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
+    init {
+        refreshCompanyInfo()
+    }
+
+    private fun refreshCompanyInfo() {
+        viewModelScope.launch {
+            _dataLoading.value = true
+            try {
+                repository.refreshCompanyInfo()
+                _networkErrorEvent.value = Event(false)
+                _dataLoading.value = false
+            } catch (networkError: IOException) {
+                _networkErrorEvent.value = Event(true)
             }
-            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
+
+
 }

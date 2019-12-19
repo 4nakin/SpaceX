@@ -17,6 +17,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_launchesFragment_to_companyInfoFragment"
+            app:destination="@id/companyInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
@@ -25,5 +28,13 @@
         <argument
             android:name="launch"
             app:argType="team.lf.spacex.data.domain.Launch" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyInfoFragment"
+        android:name="team.lf.spacex.ui.company_info.CompanyInfoFragment"
+        android:label="CompanyInfoFragment" >
+        <action
+            android:id="@+id/action_companyInfoFragment_to_launchesFragment"
+            app:destination="@id/launchesFragment" />
     </fragment>
 </navigation>

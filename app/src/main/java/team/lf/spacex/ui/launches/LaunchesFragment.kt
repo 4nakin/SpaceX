@@ -48,6 +48,7 @@ class LaunchesFragment : DaggerFragment() {
         setupListAdapter()
         setupNavigation()
         setupNetworkErrorEvent()
+
     }
 
     private fun setupNetworkErrorEvent() {

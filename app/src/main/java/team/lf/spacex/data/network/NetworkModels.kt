@@ -1,15 +1,11 @@
 package team.lf.spacex.data.network
 
-import team.lf.spacex.di.LaunchesModule
-
 
 /**
  * Models from api
  */
 
-data class NetworkModels(
-    val launches: List<Launch>
-)
+//launches
 data class Launch(
     val crew: List<String>?,
     val details: String?,
@@ -185,3 +181,4 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.Launch> {
         )
     }
 }
+
