@@ -138,6 +138,12 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_flickr" />
+            <TextView
+                android:id="@+id/no_photos"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_photos"/>
         </LinearLayout>
     </LinearLayout>
 

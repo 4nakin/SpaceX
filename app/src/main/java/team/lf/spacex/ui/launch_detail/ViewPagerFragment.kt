@@ -61,8 +61,13 @@ class ViewPagerFragment : Fragment() {
     private fun setBadges() {
         viewBinding.tabs.getTabAt(1)?.let {
             val badge = it.orCreateBadge
-            badge.isVisible =true
-            badge.number = args.launch.links.flickr_images.size-1
+            badge.isVisible = true
+            val images = args.launch.links.flickr_images
+            badge.number = if (images[0] == "") {
+                images.size - 1
+            } else {
+                images.size
+            }
         }
     }
 

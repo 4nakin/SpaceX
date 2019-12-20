@@ -19,6 +19,7 @@ import team.lf.spacex.R
  * - fragments tittle within entire app
  * - about app screen with my greetings
  * - launch filtering
+ * - ...
  * */
 
 class MainActivity : AppCompatActivity() {

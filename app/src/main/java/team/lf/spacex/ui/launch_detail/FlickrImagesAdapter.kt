@@ -2,6 +2,7 @@ package team.lf.spacex.ui.launch_detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +19,13 @@ class FlickrImagesAdapter() :
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun submitListAsync(launch: Launch) {
+    fun submitLaunchImagesList(launch: Launch) {
         adapterScope.launch {
+            val images: List<FlickrImage> = launch.links.flickr_images.map {
+                FlickrImage(it)
+            }
             withContext(Dispatchers.Main) {
-                submitList(launch.links.flickr_images.map {
-                    FlickrImage(it)
-                })
+                submitList(images)
             }
         }
     }

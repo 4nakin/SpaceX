@@ -81,7 +81,12 @@ class LaunchDetailFragment : DaggerFragment() {
         })
         viewModel.launch.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitListAsync(it)
+                if(it.links.flickr_images.size>1){
+                    Timber.d(it.links.flickr_images.size.toString())
+                    adapter.submitLaunchImagesList(it)
+                } else {
+                    viewBinding.noPhotos.visibility = View.VISIBLE
+                }
             }
         })
         viewModel.isTextAlphaAnimation.observe(viewLifecycleOwner, EventObserver {

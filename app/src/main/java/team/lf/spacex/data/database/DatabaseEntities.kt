@@ -54,23 +54,14 @@ fun Launch.asDomainLaunchModel(): team.lf.spacex.data.domain.Launch {
     return team.lf.spacex.data.domain.Launch(
         details,
         flight_number,
-        launch_date_utc,
         launch_date_unix,
-        team.lf.spacex.data.domain.LaunchSite(
-            launch_site.site_name,
-            launch_site.site_name_long
-        ),
-        launch_success,
         team.lf.spacex.data.domain.Links(
-            links.article_link,
             links.flickr_images.split(","),
-            links.mission_patch,
             links.mission_patch_small,
             links.reddit_campaign,
             links.video_link,
             links.wikipedia
         ),
-        mission_id.split(","),
         mission_name
 
     )
