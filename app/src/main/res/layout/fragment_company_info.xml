@@ -117,7 +117,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 >
 
                 <TextView
@@ -157,7 +157,6 @@
                     android:layout_marginBottom="8dp"
                     app:items="@{viewmodel.historyEvents}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
