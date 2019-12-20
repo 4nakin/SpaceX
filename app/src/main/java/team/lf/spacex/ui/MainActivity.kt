@@ -18,7 +18,7 @@ import team.lf.spacex.R
  * - pretty toolbar on company info page
  * - fragments tittle within entire app
  * - about app screen with my greetings
- * - ...
+ * - launch filtering
  * */
 
 class MainActivity : AppCompatActivity() {
