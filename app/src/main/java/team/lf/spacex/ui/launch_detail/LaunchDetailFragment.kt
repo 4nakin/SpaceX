@@ -55,7 +55,6 @@ class LaunchDetailFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewModel.start(arguments!!.getString(ARG_LAUNCH_FLIGHT_NUMBER))
-        Timber.d("fragment created")
 
         adapter = FlickrImagesAdapter()
         viewBinding = FragmentLaunchDetailsPageBinding.inflate(inflater, container, false).apply {

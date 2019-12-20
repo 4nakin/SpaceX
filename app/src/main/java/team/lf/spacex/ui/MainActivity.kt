@@ -13,7 +13,7 @@ import team.lf.spacex.R
 
 /**
  * TODO list
- * - budges on photo tab
+ * - badges on photo tab +
  * - default message when photo.size == 0
  * - pretty toolbar on company info page
  * - fragments tittle within entire app
