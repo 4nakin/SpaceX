@@ -11,6 +11,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import team.lf.spacex.R
 
+/**
+ * TODO list
+ * - budges on photo tab
+ * - default message when photo.size == 0
+ * - pretty toolbar on company info page
+ * - fragments tittle within entire app
+ * - about app screen with my greetings
+ * - ...
+ * */
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout

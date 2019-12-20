@@ -121,6 +121,7 @@
                 >
 
                 <TextView
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:id="@+id/textView6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
