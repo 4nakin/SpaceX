@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.databinding.FragmentCompanyInfoBinding
+import team.lf.spacex.setTittle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,7 +48,9 @@ class CompanyInfoFragment : DaggerFragment() {
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupEventsAdapter()
         setupNetworkErrorEvent()
-
+        viewModel.companyInfo.observe(viewLifecycleOwner, Observer {
+            setTittle(it.name)
+        })
     }
 
     private fun setupNetworkErrorEvent() {

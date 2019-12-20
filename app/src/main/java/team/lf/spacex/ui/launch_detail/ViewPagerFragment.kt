@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentViewpagerBinding
+import team.lf.spacex.setTittle
 
 class ViewPagerFragment : Fragment() {
 
@@ -33,7 +34,7 @@ class ViewPagerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setPager()
-        setTittle()
+        setTittle(args.launch.mission_name)
         setTabsText()
         setBadges()
     }
@@ -45,10 +46,6 @@ class ViewPagerFragment : Fragment() {
         }
     }
 
-    private fun setTittle() {
-        (activity as AppCompatActivity).supportActionBar?.title = args.launch.mission_name
-    }
-
     private fun setTabsText() {
         TabLayoutMediator(viewBinding.tabs, viewBinding.pager) { tab, position ->
             run {
@@ -57,7 +54,7 @@ class ViewPagerFragment : Fragment() {
         }.attach()
     }
 
-    //sets number of flikr photos to  photo tab badge
+    //sets number of flickr images to  photo tab badge
     private fun setBadges() {
         viewBinding.tabs.getTabAt(1)?.let {
             val badge = it.orCreateBadge

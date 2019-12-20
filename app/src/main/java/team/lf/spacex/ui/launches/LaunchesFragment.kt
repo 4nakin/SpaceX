@@ -12,6 +12,7 @@ import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
+import team.lf.spacex.setTittle
 import team.lf.spacex.setupRefreshLayout
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,6 +45,7 @@ class LaunchesFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.recycler)
+        setTittle("All launches") // filter name here
         setupListAdapter()
         setupNavigation()
         setupNetworkErrorEvent()
