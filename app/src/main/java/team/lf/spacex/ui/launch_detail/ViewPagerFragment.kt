@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import team.lf.spacex.R
 import team.lf.spacex.databinding.FragmentViewpagerBinding
-import team.lf.spacex.setTittle
+import team.lf.spacex.utils.setTittle
 
 class ViewPagerFragment : Fragment() {
 

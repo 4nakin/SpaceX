@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_launchesFragment_to_companyInfoFragment"
             app:destination="@id/companyInfoFragment" />
+        <action
+            android:id="@+id/action_launchesFragment_to_aboutAppFragment"
+            app:destination="@id/aboutAppFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
@@ -35,6 +38,14 @@
         android:label="CompanyInfoFragment" >
         <action
             android:id="@+id/action_companyInfoFragment_to_launchesFragment"
+            app:destination="@id/launchesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="team.lf.spacex.ui.about.AboutAppFragment"
+        android:label="AboutAppFragment" >
+        <action
+            android:id="@+id/action_aboutAppFragment_to_launchesFragment"
             app:destination="@id/launchesFragment" />
     </fragment>
 </navigation>

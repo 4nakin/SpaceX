@@ -9,4 +9,9 @@
         android:id="@id/companyInfoFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/company_info" />
+    <item
+        android:id="@id/aboutAppFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/about" />
+
 </menu>

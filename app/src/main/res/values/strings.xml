@@ -9,6 +9,7 @@
 
     <string name="launches">Launches</string>
     <string name="company_info">Company info</string>
+    <string name="about">About</string>
 
     <string name="all_launches_fragment_title">All launches</string>
     <string name="navigation_view_header_title">SpaceX</string>
@@ -19,4 +20,8 @@
     <string name="history">History:</string>
     <string name="todo">TODO</string>
     <string name="no_photos">No photos. Try to find them in another launch.</string>
+
+    <string name="hello">Hi!</string>
+    <string name="hello_body">Glad to see you here! It\'s a simple project where i train my dev skills.
+        Please, give me a feedback(mistakes, recommends) on t.me/SukhanovAleksandr.</string>
 </resources>
