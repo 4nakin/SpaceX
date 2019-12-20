@@ -49,7 +49,9 @@ class CompanyInfoFragment : DaggerFragment() {
         setupEventsAdapter()
         setupNetworkErrorEvent()
         viewModel.companyInfo.observe(viewLifecycleOwner, Observer {
-            setTittle(it.name)
+            it?.let {
+                setTittle(it.name)
+            }
         })
     }
 

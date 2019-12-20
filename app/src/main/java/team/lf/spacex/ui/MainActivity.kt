@@ -16,7 +16,7 @@ import team.lf.spacex.R
  * - badges on photo tab +
  * - default message when photo.size == 0 +
  * - fragments tittle within entire app +
- * - pretty toolbar on company info page
+ * - pretty toolbar on company info page -
  * - about app screen with my greetings
  * - launch filtering
  * - ...
