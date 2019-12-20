@@ -26,26 +26,19 @@ class CompanyInfoViewModel @Inject constructor(private val repository: SpaceXRep
     private val _historyEvents = repository.historyEvents
     val historyEvents: LiveData<List<HistoryEvent>> = _historyEvents
 
-
     private val _networkErrorEvent = MutableLiveData<Event<Boolean>>()
     val networkErrorEvent: LiveData<Event<Boolean>> = _networkErrorEvent
-
-    private val _dataLoading = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoading
 
     init {
         refreshData()
     }
 
-
     private fun refreshData() {
         viewModelScope.launch {
-            _dataLoading.value = true
             try {
                 repository.refreshCompanyInfo()
                 repository.refreshHistory()
                 _networkErrorEvent.value = Event(false)
-                _dataLoading.value = false
             } catch (networkError: IOException) {
                 _networkErrorEvent.value = Event(true)
             }

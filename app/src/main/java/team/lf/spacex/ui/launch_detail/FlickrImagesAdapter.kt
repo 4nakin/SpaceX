@@ -2,7 +2,6 @@ package team.lf.spacex.ui.launch_detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,7 @@ import team.lf.spacex.data.domain.FlickrImage
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.ItemFlickrBinding
 
-class FlickrImagesAdapter() :
+class FlickrImagesAdapter :
     ListAdapter<FlickrImage, RecyclerView.ViewHolder>(FlickrImagesDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)

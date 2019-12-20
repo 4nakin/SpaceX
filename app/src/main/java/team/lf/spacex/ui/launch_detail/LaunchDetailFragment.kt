@@ -15,7 +15,6 @@ import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
-import timber.log.Timber
 import javax.inject.Inject
 
 private const val ARG_SECTION_NUMBER = "section_number"
@@ -81,11 +80,10 @@ class LaunchDetailFragment : DaggerFragment() {
         })
         viewModel.launch.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if(it.links.flickr_images.size>1){
-                    Timber.d(it.links.flickr_images.size.toString())
+                if (it.links.flickr_images.size > 1) {
                     adapter.submitLaunchImagesList(it)
                 } else {
-                    viewBinding.noPhotos.visibility = View.VISIBLE
+                    viewModel.setPhotosUnAvailable()
                 }
             }
         })

@@ -167,7 +167,7 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.Launch> {
             ),
             links = team.lf.spacex.data.database.Links(
                 article_link = it.links.article_link ?: "",
-                flickr_images = it.links.flickr_images?.joinToString() ?: "",
+                flickr_images = it.links.flickr_images?.joinToString() ?: "empty",
                 mission_patch = it.links.mission_patch ?: "",
                 mission_patch_small = it.links.mission_patch_small ?: "",
                 presskit = it.links.presskit ?: "",

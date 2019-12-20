@@ -18,5 +18,5 @@
     <string name="founded">Founded:</string>
     <string name="history">History:</string>
     <string name="todo">TODO</string>
-    <string name="no_photos">No photos</string>
+    <string name="no_photos">No photos. Try to find it in another launch.</string>
 </resources>

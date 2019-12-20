@@ -27,6 +27,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/todo"
                 android:scaleType="fitCenter"
                 android:translationZ="-1dp"
                 app:imageUrl="@{viewmodel.launch.links.mission_patch_small}"
@@ -34,8 +35,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"
-                android:contentDescription="@string/todo" />
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ScrollView
                 android:id="@+id/scroller"
@@ -81,8 +81,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_wikipedia_logo"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_wikipedia_logo" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -100,8 +100,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_reddit_logo"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_reddit_logo" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -121,8 +121,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_youtube_logo"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_youtube_logo" />
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -130,20 +130,28 @@
             android:id="@+id/photo_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
             android:visibility="@{viewmodel.isPhotoPage() ? View.VISIBLE : View.GONE}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="@{viewmodel.isPhotosAvailable() ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_flickr" />
+
             <TextView
                 android:id="@+id/no_photos"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_photos"/>
+                android:layout_gravity="center_vertical"
+                android:text="@string/no_photos"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:visibility="@{viewmodel.isPhotosAvailable() ? View.GONE : View.VISIBLE}"
+                />
         </LinearLayout>
     </LinearLayout>
 
