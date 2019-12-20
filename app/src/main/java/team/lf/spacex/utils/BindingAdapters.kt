@@ -1,5 +1,6 @@
 package team.lf.spacex.utils
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -7,9 +8,14 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import team.lf.spacex.R
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +34,26 @@ fun ImageView.setImage(imgUrl: String?) {
         Glide.with(context)
             .load(imgUri)
             .transition(DrawableTransitionOptions.withCrossFade())
+            .apply(
+                RequestOptions()
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
+                            .error(R.drawable.ic_broken_image)
+                    )
+            )
+            .into(this)
+    }
+}
+
+@BindingAdapter("flickrUrl")
+fun ImageView.setFlickr(imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(context)
+            .load(imgUri)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .fitCenter()
             .apply(
                 RequestOptions()
                     .apply(

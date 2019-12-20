@@ -4,25 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="flickrImage"
             type="team.lf.spacex.data.domain.FlickrImage" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="@dimen/normal_space"
-        android:layout_marginTop="@dimen/normal_space"
-        android:layout_marginEnd="@dimen/normal_space"
-        app:cardCornerRadius="4dp">
-
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imageUrl="@{flickrImage.url}"
+            android:layout_height="250dp"
+            app:flickrUrl="@{flickrImage.url}"
             tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/todo" />
-    </androidx.cardview.widget.CardView>
+            android:contentDescription="@string/todo"
+            android:layout_margin="@dimen/normal_space"
+            android:layout_marginBottom="0dp"
+            />
 </layout>
