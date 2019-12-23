@@ -79,6 +79,7 @@
                 app:layout_constraintTop_toTopOf="@+id/reddit_card">
 
                 <ImageView
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/todo"
@@ -98,6 +99,7 @@
                 app:layout_constraintStart_toEndOf="@+id/wiki_card">
 
                 <ImageView
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/todo"
@@ -119,6 +121,7 @@
                 app:layout_constraintTop_toTopOf="@+id/reddit_card">
 
                 <ImageView
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/todo"
@@ -150,8 +153,7 @@
                 android:text="@string/no_photos"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:visibility="@{viewmodel.isPhotosAvailable() ? View.GONE : View.VISIBLE}"
-                />
+                android:visibility="@{viewmodel.isPhotosAvailable() ? View.GONE : View.VISIBLE}" />
         </LinearLayout>
     </LinearLayout>
 
