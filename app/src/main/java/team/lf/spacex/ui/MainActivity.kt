@@ -15,9 +15,11 @@ import team.lf.spacex.R
  * TODO list
  * - badges on photo tab +
  * - default message when photo.size == 0 +
- * - fragments tittle within entire app +
- * - pretty toolbar on company info page -
+ * - fragments tittle +
+ * - pretty toolbar on company info page
  * - about app screen with my greetings +
+ * - result logic refactoring
+ * - ripple effect
  * - launch filtering
  * - ...
  * */
