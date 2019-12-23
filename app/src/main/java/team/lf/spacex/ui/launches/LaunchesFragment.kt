@@ -1,14 +1,16 @@
 package team.lf.spacex.ui.launches
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import team.lf.spacex.R
 import team.lf.spacex.data.EventObserver
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
@@ -38,6 +40,7 @@ class LaunchesFragment : DaggerFragment() {
         ).apply {
             viewmodel = viewModel
         }
+        setHasOptionsMenu(true)
         return viewDataBinding.root
     }
 
@@ -45,12 +48,15 @@ class LaunchesFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.recycler)
-        setTittle("All launches") // filter name here
+        setTittleObserver()
+//        setTittle("All launches") // filter name here
         setupListAdapter()
         setupNavigation()
         setupNetworkErrorEvent()
 
     }
+
+
 
     private fun setupNetworkErrorEvent() {
         viewModel.networkErrorEvent.observe(viewLifecycleOwner,
@@ -85,6 +91,50 @@ class LaunchesFragment : DaggerFragment() {
         } else {
             Timber.w("ViewModel not initialized when attempting to set up adapter.")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.launches_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.menu_filter -> {
+                showFilteringPopUpMenu()
+                true
+            }
+            else -> false
+        }
+
+
+    private fun showFilteringPopUpMenu() {
+        val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.filter_launches, menu)
+
+            setOnMenuItemClickListener {
+                viewModel.setFilter(
+                    when (it.itemId) {
+                        R.id.past_launches -> LaunchesFilterType.PAST_LAUNCHES
+                        R.id.upcoming_launches -> LaunchesFilterType.UPCOMMING_LAUNCHES
+                        R.id.latest_launch -> LaunchesFilterType.LATEST_LAUNCH
+                        R.id.next_launch -> LaunchesFilterType.NEXT_LAUNCH
+                        else -> LaunchesFilterType.ALL_LAUNCHES
+                    }
+                )
+                viewModel.refreshLaunches()
+                true
+            }
+            show()
+        }
+    }
+
+    private fun setTittleObserver() {
+        viewModel.currentFragmentTittle.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                (activity as AppCompatActivity).supportActionBar?.title = context?.resources?.getText(it)
+            }
+        })
     }
 
 }

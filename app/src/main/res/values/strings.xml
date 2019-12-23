@@ -11,7 +11,13 @@
     <string name="company_info">Company info</string>
     <string name="about">About</string>
 
-    <string name="all_launches_fragment_title">All launches</string>
+    <string name="all_launches_fragment_title">All Launches</string>
+    <string name="past_launches_fragment_title">Past Launches</string>
+    <string name="upcoming_launches_fragment_title">Upcoming Launches</string>
+    <string name="latest_launch_fragment_title">Latest Launch</string>
+    <string name="next_launch_fragment_title">Next Launch</string>
+
+
     <string name="navigation_view_header_title">SpaceX</string>
 
     <string name="mask_photo">https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society.jpg</string>
@@ -24,4 +30,5 @@
     <string name="hello">Hi!</string>
     <string name="hello_body">Glad to see you here! It\'s a simple project where i train my dev skills.
         Please, give me a feedback(mistakes, recommends) on sukhanov87@gmail.com.</string>
+    <string name="menu_filter">Filter</string>
 </resources>

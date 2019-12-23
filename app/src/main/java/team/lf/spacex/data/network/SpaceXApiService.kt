@@ -15,7 +15,20 @@ interface SpaceXApiService {
     }
 
     @GET("launches")
-    fun getLaunchesAsync(): Deferred<Response<List<Launch>>>
+    fun getAllLaunchesAsync(): Deferred<Response<List<Launch>>>
+
+    @GET("launches/past")
+    fun getPastLaunchesAsync(): Deferred<Response<List<Launch>>>
+
+    @GET("launches/upcoming")
+    fun getUpcomingLaunchesAsync(): Deferred<Response<List<Launch>>>
+
+    @GET("launches/latest")
+    fun getLatestLaunchAsync(): Deferred<Response<Launch>>
+
+    @GET("launches/next")
+    fun getNextLaunchAsync(): Deferred<Response<Launch>>
+
 
 
     @GET("info")

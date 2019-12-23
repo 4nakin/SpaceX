@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import team.lf.spacex.R
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.repository.SpaceXRepository
@@ -27,16 +28,20 @@ class LaunchesViewModel @Inject constructor(private val repository: SpaceXReposi
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private var _currentFilterType = LaunchesFilterType.LATEST_LAUNCH
+
+    private val _currentFragmentTittle = MutableLiveData<Int>(R.string.latest_launch_fragment_title)
+    val currentFragmentTittle = _currentFragmentTittle
+
     init {
-        refreshAllLaunchesFromRepository()
+        refreshLaunches()
     }
 
-    fun refreshAllLaunchesFromRepository() {
-
+    fun refreshLaunches() {
         viewModelScope.launch {
             _dataLoading.value = true
             try {
-                repository.refreshAllLaunches()
+                repository.loadLaunches(_currentFilterType)
                 _networkErrorEvent.value = Event(false)
                 _dataLoading.value = false
 
@@ -49,5 +54,28 @@ class LaunchesViewModel @Inject constructor(private val repository: SpaceXReposi
 
     fun openLaunch(launch: Launch) {
         _openLaunchEvent.value = Event(launch)
+    }
+
+    fun setFilter(requestType: LaunchesFilterType) {
+        _currentFilterType = requestType
+
+        when (requestType) {
+            LaunchesFilterType.PAST_LAUNCHES -> {
+                _currentFragmentTittle.value = R.string.past_launches_fragment_title
+            }
+            LaunchesFilterType.UPCOMMING_LAUNCHES -> {
+                _currentFragmentTittle.value = R.string.upcoming_launches_fragment_title
+            }
+            LaunchesFilterType.LATEST_LAUNCH -> {
+                _currentFragmentTittle.value = R.string.latest_launch_fragment_title
+            }
+            LaunchesFilterType.NEXT_LAUNCH -> {
+                _currentFragmentTittle.value = R.string.next_launch_fragment_title
+            }
+            else -> {
+                _currentFragmentTittle.value = R.string.all_launches_fragment_title
+            }
+        }
+
     }
 }

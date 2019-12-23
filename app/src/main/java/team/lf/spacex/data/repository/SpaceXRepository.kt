@@ -12,6 +12,7 @@ import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
 import team.lf.spacex.ui.company_info.data.CompanyInfo
 import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.ui.launches.LaunchesFilterType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,15 +30,59 @@ class SpaceXRepository @Inject constructor(
             it.asDomainModels()
         }
 
-    suspend fun refreshAllLaunches() {
+    suspend fun loadLaunches(currentFilterType: LaunchesFilterType) {
         withContext(Dispatchers.IO) {
-            val launchesResponse = safeApiCall(
-                call = { service.getLaunchesAsync().await() },
-                errorMessage = "Error fetching launches"
-            )
-            launchesResponse?.let {
-                database.spaceXDao.insertAll(it.asDatabaseModels())
+
+            /**
+             * I've decided to clear db and use different api call instead of using room query("select * from launches where ...")
+             * Perhaps it is not good for app speed
+             * */
+            database.spaceXDao.clearLaunches()
+            val launches = mutableListOf<team.lf.spacex.data.network.Launch>().apply {
+                when (currentFilterType) {
+                    LaunchesFilterType.PAST_LAUNCHES -> {
+                        safeApiCall(
+                            call = { service.getPastLaunchesAsync().await() },
+                            errorMessage = "Error fetching launches"
+                        )?.let {
+                            addAll(it)
+                        }
+                    }
+                    LaunchesFilterType.UPCOMMING_LAUNCHES -> {
+                        safeApiCall(
+                            call = { service.getUpcomingLaunchesAsync().await() },
+                            errorMessage = "Error fetching launches"
+                        )?.let {
+                            addAll(it)
+                        }
+                    }
+                    LaunchesFilterType.LATEST_LAUNCH -> {
+                        safeApiCall(
+                            call = { service.getLatestLaunchAsync().await() },
+                            errorMessage = "Error fetching launches"
+                        )?.let {
+                            add(it)
+                        }
+                    }
+                    LaunchesFilterType.NEXT_LAUNCH -> {
+                        safeApiCall(
+                            call = { service.getNextLaunchAsync().await() },
+                            errorMessage = "Error fetching launches"
+                        )?.let {
+                            add(it)
+                        }
+                    }
+                    LaunchesFilterType.ALL_LAUNCHES -> {
+                        safeApiCall(
+                            call = { service.getAllLaunchesAsync().await() },
+                            errorMessage = "Error fetching launches"
+                        )?.let {
+                            addAll(it)
+                        }
+                    }
+                }
             }
+            database.spaceXDao.insertAll(launches.asDatabaseModels())
         }
     }
 
@@ -67,11 +112,11 @@ class SpaceXRepository @Inject constructor(
 
     suspend fun refreshHistory() {
         withContext(Dispatchers.IO) {
-            val historyEvents = safeApiCall(
+            val events = safeApiCall(
                 call = { service.getLHistoryEventsAsync().await() },
                 errorMessage = "Error fetching historyEvents"
             )
-            historyEvents?.let {
+            events?.let {
                 database.spaceXDao.insertHistoryEvent(it)
             }
         }

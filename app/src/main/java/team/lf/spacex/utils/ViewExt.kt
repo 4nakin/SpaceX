@@ -33,3 +33,10 @@ fun Fragment.setTittle(tittle: String?) {
         (activity as AppCompatActivity).supportActionBar?.title = tittle
     }
 }
+
+fun Fragment.setTittle(tittle: Int?) {
+    tittle?.let {
+        (activity as AppCompatActivity).supportActionBar?.title = context?.resources?.getText(tittle)
+    }
+}
+

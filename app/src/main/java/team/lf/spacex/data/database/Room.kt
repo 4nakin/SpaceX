@@ -32,6 +32,9 @@ interface SpaceXDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHistoryEvent(historyEvents: List<HistoryEvent>)
 
+    @Query("DELETE FROM launches")
+    fun clearLaunches()
+
 }
 
 /**

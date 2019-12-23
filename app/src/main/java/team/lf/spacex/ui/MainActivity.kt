@@ -18,8 +18,9 @@ import team.lf.spacex.R
  * - fragments tittle +
  * - pretty toolbar on company info page
  * - about app screen with my greetings +
- * - ripple effect
+ * - ripple effect +
  * - launch filtering
+ * - favorite launches list
  * - ...
  * */
 
