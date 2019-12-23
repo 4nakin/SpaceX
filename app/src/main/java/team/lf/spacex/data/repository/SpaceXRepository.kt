@@ -37,7 +37,6 @@ class SpaceXRepository @Inject constructor(
              * I've decided to clear db and use different api call instead of using room query("select * from launches where ...")
              * Perhaps it is not good for app speed
              * */
-            database.spaceXDao.clearLaunches()
             val launches = mutableListOf<team.lf.spacex.data.network.Launch>().apply {
                 when (currentFilterType) {
                     LaunchesFilterType.PAST_LAUNCHES -> {
@@ -82,6 +81,7 @@ class SpaceXRepository @Inject constructor(
                     }
                 }
             }
+            if (launches.size > 0) database.spaceXDao.clearLaunches()
             database.spaceXDao.insertAll(launches.asDatabaseModels())
         }
     }
