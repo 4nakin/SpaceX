@@ -41,6 +41,7 @@ class SpaceXRepository @Inject constructor(
         }
     }
 
+
     fun getLaunchByFlightNumberFromDatabase(flightNumber: String)
             : LiveData<Launch> {
         return Transformations.map(database.spaceXDao.getLaunchByFlightNumber(flightNumber)) {
