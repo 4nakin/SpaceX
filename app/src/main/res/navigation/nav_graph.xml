@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_launchesFragment_to_aboutAppFragment"
             app:destination="@id/aboutAppFragment" />
+        <action
+            android:id="@+id/action_launchesFragment_to_aboutAppFragment2"
+            app:destination="@id/aboutAppFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"

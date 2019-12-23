@@ -11,7 +11,7 @@
         android:title="@string/company_info" />
     <item
         android:id="@id/aboutAppFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/ic_sentiment_satisfied_black_24dp"
         android:title="@string/about" />
 
 </menu>
