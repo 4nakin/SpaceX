@@ -56,8 +56,6 @@ class LaunchesFragment : DaggerFragment() {
 
     }
 
-
-
     private fun setupNetworkErrorEvent() {
         viewModel.networkErrorEvent.observe(viewLifecycleOwner,
             EventObserver {
@@ -105,7 +103,6 @@ class LaunchesFragment : DaggerFragment() {
             }
             else -> false
         }
-
 
     private fun showFilteringPopUpMenu() {
         val view = activity?.findViewById<View>(R.id.menu_filter) ?: return

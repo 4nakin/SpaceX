@@ -28,9 +28,9 @@ class LaunchesViewModel @Inject constructor(private val repository: SpaceXReposi
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private var _currentFilterType = LaunchesFilterType.LATEST_LAUNCH
+    private var _currentFilterType = LaunchesFilterType.PAST_LAUNCHES
 
-    private val _currentFragmentTittle = MutableLiveData<Int>(R.string.latest_launch_fragment_title)
+    private val _currentFragmentTittle = MutableLiveData<Int>(R.string.past_launches_fragment_title)
     val currentFragmentTittle = _currentFragmentTittle
 
     init {

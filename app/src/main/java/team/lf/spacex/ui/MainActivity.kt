@@ -16,11 +16,12 @@ import team.lf.spacex.R
  * - badges on photo tab +
  * - default message when photo.size == 0 +
  * - fragments tittle +
- * - pretty toolbar on company info page
+ * - pretty toolbar on company info page ?
  * - about app screen with my greetings +
  * - ripple effect +
- * - launch filtering
- * - favorite launches list
+ * - launch filtering +
+ * - favorite launches list ?
+ * - tests
  * - ...
  * */
 
@@ -29,13 +30,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigationDrawer()
         setSupportActionBar(findViewById(R.id.toolbar))
-
 
         val navController = this.findNavController(R.id.nav_host_fragment)
         appBarConfiguration =

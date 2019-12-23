@@ -3,6 +3,7 @@ package team.lf.spacex.data.network
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 import team.lf.spacex.ui.company_info.data.CompanyInfo
 import team.lf.spacex.ui.company_info.data.HistoryEvent
 
@@ -18,7 +19,7 @@ interface SpaceXApiService {
     fun getAllLaunchesAsync(): Deferred<Response<List<Launch>>>
 
     @GET("launches/past")
-    fun getPastLaunchesAsync(): Deferred<Response<List<Launch>>>
+    fun getPastLaunchesAsync(@Query("order") order: String = "desc"): Deferred<Response<List<Launch>>>
 
     @GET("launches/upcoming")
     fun getUpcomingLaunchesAsync(): Deferred<Response<List<Launch>>>
@@ -28,8 +29,6 @@ interface SpaceXApiService {
 
     @GET("launches/next")
     fun getNextLaunchAsync(): Deferred<Response<Launch>>
-
-
 
     @GET("info")
     fun getCompanyInfoAsync(): Deferred<Response<CompanyInfo>>
