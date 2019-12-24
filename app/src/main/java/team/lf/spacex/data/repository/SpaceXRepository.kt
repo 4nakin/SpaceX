@@ -10,8 +10,8 @@ import team.lf.spacex.data.database.asDomainModels
 import team.lf.spacex.data.domain.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
-import team.lf.spacex.ui.company_info.data.CompanyInfo
-import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.data.database.entity.CompanyInfo
+import team.lf.spacex.data.database.entity.HistoryEvent
 import team.lf.spacex.ui.launches.LaunchesFilterType
 import javax.inject.Inject
 import javax.inject.Singleton

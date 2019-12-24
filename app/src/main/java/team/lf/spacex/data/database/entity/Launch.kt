@@ -1,4 +1,4 @@
-package team.lf.spacex.data.database
+package team.lf.spacex.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 /**
  * Models for store in db
  */
+
 @Entity(tableName = "launches")
 data class Launch(
     val details: String,
@@ -43,27 +44,5 @@ data class LaunchSite(
     val site_name_long: String
 )
 
-fun List<Launch>.asDomainModels(): List<team.lf.spacex.data.domain.Launch> {
-    return map {
-        it.asDomainLaunchModel()
-    }
 
 
-}
-
-fun Launch.asDomainLaunchModel(): team.lf.spacex.data.domain.Launch {
-    return team.lf.spacex.data.domain.Launch(
-        details,
-        flight_number,
-        launch_date_unix,
-        team.lf.spacex.data.domain.Links(
-            links.flickr_images.split(","),
-            links.mission_patch_small,
-            links.reddit_campaign,
-            links.video_link,
-            links.wikipedia
-        ),
-        mission_name
-
-    )
-}

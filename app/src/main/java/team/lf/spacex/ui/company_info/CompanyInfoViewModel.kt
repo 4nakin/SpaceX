@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.repository.SpaceXRepository
-import team.lf.spacex.ui.company_info.data.CompanyInfo
-import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.data.database.entity.CompanyInfo
+import team.lf.spacex.data.database.entity.HistoryEvent
 import java.io.IOException
 import javax.inject.Inject
 

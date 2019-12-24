@@ -1,11 +1,11 @@
-package team.lf.spacex.ui.company_info.data
+package team.lf.spacex.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * These models are used as network , db and representing models
+ * These models are used as network ,db models and for representing in companyInfo ui
  * */
 @Entity
 data class CompanyInfo(
@@ -19,7 +19,7 @@ data class CompanyInfo(
     val founder: String,
     @Embedded val headquarters: Headquarters,
     val launch_sites: Int,
-    @Embedded val links: Links,
+    @Embedded val links: CompanyInfoLinks,
     val name: String,
     val summary: String,
     val test_sites: Int,
@@ -35,7 +35,7 @@ data class Headquarters(
     val state: String
 )
 
-data class Links(
+data class CompanyInfoLinks(
     val elon_twitter: String,
     val flickr: String,
     val twitter: String,

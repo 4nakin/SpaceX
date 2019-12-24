@@ -148,9 +148,9 @@ data class Timeline(
     val webcast_liftoff: String?
 )
 
-fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.Launch> {
+fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.entity.Launch> {
     return map {
-        team.lf.spacex.data.database.Launch(
+        team.lf.spacex.data.database.entity.Launch(
             details = it.details ?: "Empty",
             flight_number = it.flight_number ?: "",
             launch_date_local = it.launch_date_local ?: "",
@@ -160,12 +160,12 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.Launch> {
             launch_year = it.launch_year ?: "",
             mission_id = it.mission_id?.joinToString() ?: "",
             mission_name = it.mission_name ?: "",
-            launch_site = team.lf.spacex.data.database.LaunchSite(
+            launch_site = team.lf.spacex.data.database.entity.LaunchSite(
                 it.launch_site?.site_id ?: "",
                 it.launch_site?.site_name ?: "",
                 it.launch_site?.site_name_long ?: ""
             ),
-            links = team.lf.spacex.data.database.Links(
+            links = team.lf.spacex.data.database.entity.Links(
                 article_link = it.links.article_link ?: "",
                 flickr_images = it.links.flickr_images?.joinToString() ?: "empty",
                 mission_patch = it.links.mission_patch ?: "",
