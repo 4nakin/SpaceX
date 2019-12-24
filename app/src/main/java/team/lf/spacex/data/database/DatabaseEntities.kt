@@ -19,7 +19,8 @@ data class Launch(
     val launch_year: String,
     @Embedded val links: Links,
     val mission_id: String,
-    val mission_name: String
+    val mission_name: String,
+    val upcoming: Boolean
 )
 
 data class Links(

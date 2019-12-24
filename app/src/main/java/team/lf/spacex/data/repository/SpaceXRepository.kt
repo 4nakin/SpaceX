@@ -82,7 +82,7 @@ class SpaceXRepository @Inject constructor(
                 }
             }
             if (launches.size > 0) database.spaceXDao.clearLaunches()
-            database.spaceXDao.insertAll(launches.asDatabaseModels())
+            database.spaceXDao.insertAllLaunches(launches.asDatabaseModels())
         }
     }
 

@@ -15,10 +15,13 @@ interface SpaceXDao {
     fun getAllLaunches(): LiveData<List<Launch>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(launches: List<Launch>)
+    fun insertAllLaunches(launches: List<Launch>)
 
     @Query("select * from launches where flight_number = :flightNumber")
     fun getLaunchByFlightNumber(flightNumber: String): LiveData<Launch>
+
+    @Query("select * from launches where upcoming = :isUpcoming")
+    fun getUpcomingLaunches(isUpcoming: Boolean): LiveData<List<Launch>>
 
     @Query("select * from companyinfo")
     fun getCompanyInfo(): LiveData<CompanyInfo>

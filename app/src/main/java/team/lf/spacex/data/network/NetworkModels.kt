@@ -177,7 +177,8 @@ fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.Launch> {
                 video_link = it.links.video_link ?: "",
                 wikipedia = it.links.wikipedia ?: "",
                 youtube_id = it.links.youtube_id ?: ""
-            )
+            ),
+            upcoming = it.upcoming ?: false
         )
     }
 }
