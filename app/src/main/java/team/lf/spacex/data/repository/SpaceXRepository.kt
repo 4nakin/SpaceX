@@ -7,12 +7,11 @@ import kotlinx.coroutines.withContext
 import team.lf.spacex.data.database.SpaceXDatabase
 import team.lf.spacex.data.database.asDomainLaunchModel
 import team.lf.spacex.data.database.asDomainModels
-import team.lf.spacex.data.ui_models.Launch
-import team.lf.spacex.data.network.SpaceXApiService
-import team.lf.spacex.data.network.asDatabaseModels
 import team.lf.spacex.data.database.entity.CompanyInfo
 import team.lf.spacex.data.database.entity.HistoryEvent
-import team.lf.spacex.ui.launches.LaunchesFilterType
+import team.lf.spacex.data.network.SpaceXApiService
+import team.lf.spacex.data.network.asDatabaseModels
+import team.lf.spacex.data.ui_models.Launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,67 +24,75 @@ class SpaceXRepository @Inject constructor(
     private val service: SpaceXApiService
 ) : BaseRepository() {
 
+    val companyInfo: LiveData<CompanyInfo> =
+        database.spaceXDao.getCompanyInfo()
+
     val allLaunches: LiveData<List<Launch>> =
         Transformations.map(database.spaceXDao.getAllLaunches()) {
             it.asDomainModels()
         }
 
-    suspend fun loadLaunches(currentFilterType: LaunchesFilterType) {
-        withContext(Dispatchers.IO) {
+    val historyEvents: LiveData<List<HistoryEvent>> = database.spaceXDao.getHistoryEvents()
 
-            /**
-             * I've decided to clear db and use different api call instead of using room query("select * from launches where ...")
-             * Perhaps it is not good for app speed
-             * */
-            val launches = mutableListOf<team.lf.spacex.data.network.Launch>().apply {
-                when (currentFilterType) {
-                    LaunchesFilterType.PAST_LAUNCHES -> {
-                        safeApiCall(
-                            call = { service.getPastLaunchesAsync().await() },
-                            errorMessage = "Error fetching launches"
-                        )?.let {
-                            addAll(it)
-                        }
-                    }
-                    LaunchesFilterType.UPCOMMING_LAUNCHES -> {
-                        safeApiCall(
-                            call = { service.getUpcomingLaunchesAsync().await() },
-                            errorMessage = "Error fetching launches"
-                        )?.let {
-                            addAll(it)
-                        }
-                    }
-                    LaunchesFilterType.LATEST_LAUNCH -> {
-                        safeApiCall(
-                            call = { service.getLatestLaunchAsync().await() },
-                            errorMessage = "Error fetching launches"
-                        )?.let {
-                            add(it)
-                        }
-                    }
-                    LaunchesFilterType.NEXT_LAUNCH -> {
-                        safeApiCall(
-                            call = { service.getNextLaunchAsync().await() },
-                            errorMessage = "Error fetching launches"
-                        )?.let {
-                            add(it)
-                        }
-                    }
-                    LaunchesFilterType.ALL_LAUNCHES -> {
-                        safeApiCall(
-                            call = { service.getAllLaunchesAsync().await() },
-                            errorMessage = "Error fetching launches"
-                        )?.let {
-                            addAll(it)
-                        }
-                    }
-                }
+    suspend fun loadAllLaunches(){
+        withContext(Dispatchers.IO){
+            safeApiCall(
+                call = { service.getAllLaunchesAsync().await() },
+                errorMessage = "Error fetching launches"
+            )?.let {
+                database.spaceXDao.clearLaunches()
+                database.spaceXDao.insertAllLaunches(it.asDatabaseModels())
             }
-            if (launches.size > 0) database.spaceXDao.clearLaunches()
-            database.spaceXDao.insertAllLaunches(launches.asDatabaseModels())
         }
     }
 
+    suspend fun loadPastLaunches(){
+        withContext(Dispatchers.IO){
+            safeApiCall(
+                call = { service.getPastLaunchesAsync().await() },
+                errorMessage = "Error fetching launches"
+            )?.let {
+                database.spaceXDao.clearLaunches()
+                database.spaceXDao.insertAllLaunches(it.asDatabaseModels())
+            }
+        }
+    }
+
+    suspend fun loadUpcomingLaunches(){
+        withContext(Dispatchers.IO){
+            safeApiCall(
+                call = { service.getUpcomingLaunchesAsync().await() },
+                errorMessage = "Error fetching launches"
+            )?.let {
+                database.spaceXDao.clearLaunches()
+                database.spaceXDao.insertAllLaunches(it.asDatabaseModels())
+            }
+        }
+    }
+
+    suspend fun loadLatestLaunch(){
+        withContext(Dispatchers.IO){
+            safeApiCall(
+                call = { service.getLatestLaunchAsync().await() },
+                errorMessage = "Error fetching launches"
+            )?.let {
+                database.spaceXDao.clearLaunches()
+                database.spaceXDao.insertAllLaunches(listOf(it).asDatabaseModels())
+            }
+        }
+    }
+
+    suspend fun loadNextLaunch(){
+        withContext(Dispatchers.IO){
+            safeApiCall(
+                call = { service.getNextLaunchAsync().await() },
+                errorMessage = "Error fetching launches"
+            )?.let {
+                database.spaceXDao.clearLaunches()
+                database.spaceXDao.insertAllLaunches(listOf(it).asDatabaseModels())
+            }
+        }
+    }
 
     fun getLaunchByFlightNumberFromDatabase(flightNumber: String)
             : LiveData<Launch> {
@@ -93,8 +100,6 @@ class SpaceXRepository @Inject constructor(
             it.asDomainLaunchModel()
         }
     }
-
-    val companyInfo: LiveData<CompanyInfo> = database.spaceXDao.getCompanyInfo()
 
     suspend fun refreshCompanyInfo() {
         withContext(Dispatchers.IO) {
@@ -107,8 +112,6 @@ class SpaceXRepository @Inject constructor(
             }
         }
     }
-
-    val historyEvents: LiveData<List<HistoryEvent>> = database.spaceXDao.getHistoryEvents()
 
     suspend fun refreshHistory() {
         withContext(Dispatchers.IO) {

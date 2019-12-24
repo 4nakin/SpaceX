@@ -8,15 +8,13 @@ import kotlinx.coroutines.launch
 import team.lf.spacex.R
 import team.lf.spacex.data.Event
 import team.lf.spacex.data.ui_models.Launch
-import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
 import javax.inject.Inject
 
-class LaunchesViewModel @Inject constructor(private val repository: SpaceXRepository) :
+class LaunchesViewModel @Inject constructor(private val launchesInteract: LaunchesInteract) :
     ViewModel() {
 
-
-    private val _allLaunches: LiveData<List<Launch>> = repository.allLaunches
+    private val _allLaunches: LiveData<List<Launch>> = launchesInteract.getAllLaunchesFromDatabase()
     val allLaunches = _allLaunches
 
     private val _openLaunchEvent = MutableLiveData<Event<Launch>>()
@@ -41,7 +39,7 @@ class LaunchesViewModel @Inject constructor(private val repository: SpaceXReposi
         viewModelScope.launch {
             _dataLoading.value = true
             try {
-                repository.loadLaunches(_currentFilterType)
+                launchesInteract.loadLaunches(_currentFilterType)
                 _networkErrorEvent.value = Event(false)
                 _dataLoading.value = false
 
@@ -58,24 +56,20 @@ class LaunchesViewModel @Inject constructor(private val repository: SpaceXReposi
 
     fun setFilter(requestType: LaunchesFilterType) {
         _currentFilterType = requestType
+        setTittle(requestType)
+    }
 
-        when (requestType) {
-            LaunchesFilterType.PAST_LAUNCHES -> {
-                _currentFragmentTittle.value = R.string.past_launches_fragment_title
-            }
-            LaunchesFilterType.UPCOMMING_LAUNCHES -> {
-                _currentFragmentTittle.value = R.string.upcoming_launches_fragment_title
-            }
-            LaunchesFilterType.LATEST_LAUNCH -> {
-                _currentFragmentTittle.value = R.string.latest_launch_fragment_title
-            }
-            LaunchesFilterType.NEXT_LAUNCH -> {
-                _currentFragmentTittle.value = R.string.next_launch_fragment_title
-            }
-            else -> {
-                _currentFragmentTittle.value = R.string.all_launches_fragment_title
-            }
+    fun setTittle(requestType: LaunchesFilterType) {
+        _currentFragmentTittle.value = when (requestType) {
+            LaunchesFilterType.PAST_LAUNCHES -> R.string.past_launches_fragment_title
+            LaunchesFilterType.UPCOMMING_LAUNCHES -> R.string.upcoming_launches_fragment_title
+            LaunchesFilterType.LATEST_LAUNCH -> R.string.latest_launch_fragment_title
+            LaunchesFilterType.NEXT_LAUNCH -> R.string.next_launch_fragment_title
+            else -> R.string.all_launches_fragment_title
         }
-
     }
 }
+
+
+
+
