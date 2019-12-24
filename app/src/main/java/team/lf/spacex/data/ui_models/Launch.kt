@@ -1,4 +1,4 @@
-package team.lf.spacex.data.domain
+package team.lf.spacex.data.ui_models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

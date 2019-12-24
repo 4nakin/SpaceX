@@ -9,8 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import team.lf.spacex.data.domain.FlickrImage
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.FlickrImage
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.ItemFlickrBinding
 
 class FlickrImagesAdapter :

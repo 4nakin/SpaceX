@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import team.lf.spacex.R
 import team.lf.spacex.data.Event
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.data.repository.SpaceXRepository
 import java.io.IOException
 import javax.inject.Inject

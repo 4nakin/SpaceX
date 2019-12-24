@@ -7,7 +7,7 @@
 
         <variable
             name="launch"
-            type="team.lf.spacex.data.domain.Launch" />
+            type="team.lf.spacex.data.ui_models.Launch" />
 
         <variable
             name="viewModel"

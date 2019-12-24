@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import team.lf.spacex.data.Event
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.data.repository.SpaceXRepository
 import javax.inject.Inject
 

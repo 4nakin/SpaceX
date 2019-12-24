@@ -33,7 +33,7 @@
         android:label="ViewPagerFragment" >
         <argument
             android:name="launch"
-            app:argType="team.lf.spacex.data.domain.Launch" />
+            app:argType="team.lf.spacex.data.ui_models.Launch" />
     </fragment>
     <fragment
         android:id="@+id/companyInfoFragment"

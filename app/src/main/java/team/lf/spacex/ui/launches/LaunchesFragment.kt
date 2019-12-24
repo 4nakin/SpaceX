@@ -12,9 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import team.lf.spacex.R
 import team.lf.spacex.data.EventObserver
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
-import team.lf.spacex.utils.setTittle
 import team.lf.spacex.utils.setupRefreshLayout
 import timber.log.Timber
 import javax.inject.Inject

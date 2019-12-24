@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import team.lf.spacex.data.database.SpaceXDatabase
 import team.lf.spacex.data.database.asDomainLaunchModel
 import team.lf.spacex.data.database.asDomainModels
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.data.network.SpaceXApiService
 import team.lf.spacex.data.network.asDatabaseModels
 import team.lf.spacex.data.database.entity.CompanyInfo

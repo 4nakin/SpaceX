@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
 import javax.inject.Inject
 
