@@ -148,38 +148,3 @@ data class Timeline(
     val webcast_liftoff: String?
 )
 
-fun List<Launch>.asDatabaseModels(): List<team.lf.spacex.data.database.entity.Launch> {
-    return map {
-        team.lf.spacex.data.database.entity.Launch(
-            details = it.details ?: "Empty",
-            flight_number = it.flight_number ?: "",
-            launch_date_local = it.launch_date_local ?: "",
-            launch_date_unix = it.launch_date_unix ?: "",
-            launch_date_utc = it.launch_date_utc ?: "",
-            launch_success = it.launch_success ?: false,
-            launch_year = it.launch_year ?: "",
-            mission_id = it.mission_id?.joinToString() ?: "",
-            mission_name = it.mission_name ?: "",
-            launch_site = team.lf.spacex.data.database.entity.LaunchSite(
-                it.launch_site?.site_id ?: "",
-                it.launch_site?.site_name ?: "",
-                it.launch_site?.site_name_long ?: ""
-            ),
-            links = team.lf.spacex.data.database.entity.Links(
-                article_link = it.links.article_link ?: "",
-                flickr_images = it.links.flickr_images?.joinToString() ?: "empty",
-                mission_patch = it.links.mission_patch ?: "",
-                mission_patch_small = it.links.mission_patch_small ?: "",
-                presskit = it.links.presskit ?: "",
-                reddit_campaign = it.links.reddit_campaign ?: "",
-                reddit_launch = it.links.reddit_launch ?: "",
-                reddit_media = it.links.reddit_media ?: "",
-                video_link = it.links.video_link ?: "",
-                wikipedia = it.links.wikipedia ?: "",
-                youtube_id = it.links.youtube_id ?: ""
-            ),
-            upcoming = it.upcoming ?: false
-        )
-    }
-}
-
