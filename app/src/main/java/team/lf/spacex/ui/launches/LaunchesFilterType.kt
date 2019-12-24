@@ -27,7 +27,7 @@ enum class LaunchesFilterType {
     LATEST_LAUNCH,
 
     /**
-     * Filters only next launch.
+     * Filters only the next launch.
      */
     NEXT_LAUNCH
 

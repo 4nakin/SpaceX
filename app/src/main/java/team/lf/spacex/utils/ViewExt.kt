@@ -28,9 +28,9 @@ fun Fragment.setupRefreshLayout(
     }
 }
 
-fun Fragment.setTittle(tittle: String?) {
-    tittle?.let {
-        (activity as AppCompatActivity).supportActionBar?.title = tittle
+fun Fragment.setTittle(title: String?) {
+    title?.let {
+        (activity as AppCompatActivity).supportActionBar?.title = title
     }
 }
 

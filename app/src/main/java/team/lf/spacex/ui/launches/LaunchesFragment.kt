@@ -49,7 +49,6 @@ class LaunchesFragment : DaggerFragment() {
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.recycler)
         setTittleObserver()
-//        setTittle("All launches") // filter name here
         setupListAdapter()
         setupNavigation()
         setupNetworkErrorEvent()
