@@ -16,19 +16,6 @@ import team.lf.spacex.databinding.ItemFlickrBinding
 class FlickrImagesAdapter :
     ListAdapter<FlickrImage, RecyclerView.ViewHolder>(FlickrImagesDiffCallback()) {
 
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
-
-    fun submitLaunchImagesList(launch: Launch) {
-        adapterScope.launch {
-            val images: List<FlickrImage> = launch.links.flickr_images.map {
-                FlickrImage(it)
-            }
-            withContext(Dispatchers.Main) {
-                submitList(images)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return FlickrViewholder.from(parent)
     }

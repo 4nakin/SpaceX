@@ -18,6 +18,7 @@ import javax.inject.Singleton
 /**
  * Repository module for handling data operations.
  */
+//todo address hardcoded strings
 @Singleton
 class SpaceXRepository @Inject constructor(
     private val database: SpaceXDatabase,
