@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import team.lf.spacex.R
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 
 
 /**

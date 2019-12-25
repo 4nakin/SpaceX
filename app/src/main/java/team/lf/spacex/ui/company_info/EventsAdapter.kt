@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import team.lf.spacex.databinding.ItemHistoryEventBinding
-import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.data.database.entity.HistoryEvent
 
 class EventsAdapter :
     ListAdapter<HistoryEvent, EventsAdapter.EventsViewHolder>(EventsDiffCallBack()) {

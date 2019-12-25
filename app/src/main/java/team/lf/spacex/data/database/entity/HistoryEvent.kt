@@ -1,9 +1,13 @@
-package team.lf.spacex.ui.company_info.data
+package team.lf.spacex.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+/**
+ * These models are used as network ,db models and for representing in companyInfo ui
+ * */
 @Entity
 data class HistoryEvent(
     val details: String?,
@@ -12,11 +16,11 @@ data class HistoryEvent(
     val flight_number: Int?,
     @PrimaryKey
     val id: Int,
-    @Embedded val links: SMLinks,
+    @Embedded val links: HistoryEventLinks,
     val title: String?
 )
 
-data class SMLinks(
+data class HistoryEventLinks(
     val article: String?,
     val reddit: String?,
     val wikipedia: String?

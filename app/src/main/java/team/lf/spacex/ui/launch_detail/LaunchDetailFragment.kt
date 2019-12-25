@@ -13,7 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
 import team.lf.spacex.data.EventObserver
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.FlickrImage
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.FragmentLaunchDetailsPageBinding
 import javax.inject.Inject
 
@@ -53,7 +54,7 @@ class LaunchDetailFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.start(arguments!!.getString(ARG_LAUNCH_FLIGHT_NUMBER))
+        viewModel.start(requireArguments().getString(ARG_LAUNCH_FLIGHT_NUMBER))
 
         adapter = FlickrImagesAdapter()
         viewBinding = FragmentLaunchDetailsPageBinding.inflate(inflater, container, false).apply {
@@ -81,7 +82,7 @@ class LaunchDetailFragment : DaggerFragment() {
         viewModel.launch.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it.links.flickr_images.size > 1) {
-                    adapter.submitLaunchImagesList(it)
+                    adapter.submitList(it.links.flickr_images.map {imageUrl-> FlickrImage(imageUrl) })
                 } else {
                     viewModel.setPhotosUnAvailable()
                 }

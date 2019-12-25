@@ -4,8 +4,8 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-import team.lf.spacex.ui.company_info.data.CompanyInfo
-import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.data.database.entity.CompanyInfo
+import team.lf.spacex.data.database.entity.HistoryEvent
 
 /**
  * SpaceX REST API access points

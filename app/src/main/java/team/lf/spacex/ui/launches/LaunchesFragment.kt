@@ -12,9 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import team.lf.spacex.R
 import team.lf.spacex.data.EventObserver
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.FragmentAllLaunchesBinding
-import team.lf.spacex.utils.setTittle
 import team.lf.spacex.utils.setupRefreshLayout
 import timber.log.Timber
 import javax.inject.Inject
@@ -109,15 +108,15 @@ class LaunchesFragment : DaggerFragment() {
             menuInflater.inflate(R.menu.filter_launches, menu)
 
             setOnMenuItemClickListener {
-                viewModel.setFilter(
-                    when (it.itemId) {
-                        R.id.past_launches -> LaunchesFilterType.PAST_LAUNCHES
-                        R.id.upcoming_launches -> LaunchesFilterType.UPCOMMING_LAUNCHES
-                        R.id.latest_launch -> LaunchesFilterType.LATEST_LAUNCH
-                        R.id.next_launch -> LaunchesFilterType.NEXT_LAUNCH
-                        else -> LaunchesFilterType.ALL_LAUNCHES
-                    }
-                )
+                val filter = when (it.itemId) {
+                    R.id.past_launches -> LaunchesFilterType.PAST_LAUNCHES
+                    R.id.upcoming_launches -> LaunchesFilterType.UPCOMMING_LAUNCHES
+                    R.id.latest_launch -> LaunchesFilterType.LATEST_LAUNCH
+                    R.id.next_launch -> LaunchesFilterType.NEXT_LAUNCH
+                    else -> LaunchesFilterType.ALL_LAUNCHES
+                }
+                viewModel.setFilter(filter)
+                viewModel.setTittle(filter)
                 viewModel.refreshLaunches()
                 true
             }
@@ -128,7 +127,8 @@ class LaunchesFragment : DaggerFragment() {
     private fun setTittleObserver() {
         viewModel.currentFragmentTittle.observe(viewLifecycleOwner, Observer {
             it?.let {
-                (activity as AppCompatActivity).supportActionBar?.title = context?.resources?.getText(it)
+                (activity as AppCompatActivity).supportActionBar?.title =
+                    context?.resources?.getText(it)
             }
         })
     }

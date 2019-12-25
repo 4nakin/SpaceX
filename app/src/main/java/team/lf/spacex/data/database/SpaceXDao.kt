@@ -2,8 +2,9 @@ package team.lf.spacex.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import team.lf.spacex.ui.company_info.data.CompanyInfo
-import team.lf.spacex.ui.company_info.data.HistoryEvent
+import team.lf.spacex.data.database.entity.CompanyInfo
+import team.lf.spacex.data.database.entity.HistoryEvent
+import team.lf.spacex.data.database.entity.Launch
 
 
 /**
@@ -40,13 +41,7 @@ interface SpaceXDao {
 
 }
 
-/**
- * The Room Database that contains the Lunch table.
- **/
-@Database(entities = [Launch::class, CompanyInfo::class, HistoryEvent::class], version = 1)
-abstract class SpaceXDatabase : RoomDatabase() {
-    abstract val spaceXDao: SpaceXDao
-}
+
 
 
 

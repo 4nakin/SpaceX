@@ -7,7 +7,7 @@
 
         <variable
             name="historyEvent"
-            type="team.lf.spacex.ui.company_info.data.HistoryEvent" />
+            type="team.lf.spacex.data.database.entity.HistoryEvent" />
     </data>
 
     <androidx.cardview.widget.CardView

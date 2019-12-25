@@ -9,25 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import team.lf.spacex.data.domain.FlickrImage
-import team.lf.spacex.data.domain.Launch
+import team.lf.spacex.data.ui_models.FlickrImage
+import team.lf.spacex.data.ui_models.Launch
 import team.lf.spacex.databinding.ItemFlickrBinding
 
 class FlickrImagesAdapter :
     ListAdapter<FlickrImage, RecyclerView.ViewHolder>(FlickrImagesDiffCallback()) {
-
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
-
-    fun submitLaunchImagesList(launch: Launch) {
-        adapterScope.launch {
-            val images: List<FlickrImage> = launch.links.flickr_images.map {
-                FlickrImage(it)
-            }
-            withContext(Dispatchers.Main) {
-                submitList(images)
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return FlickrViewholder.from(parent)
