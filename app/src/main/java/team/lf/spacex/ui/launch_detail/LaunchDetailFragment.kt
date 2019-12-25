@@ -54,7 +54,7 @@ class LaunchDetailFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.start(arguments!!.getString(ARG_LAUNCH_FLIGHT_NUMBER))
+        viewModel.start(requireArguments().getString(ARG_LAUNCH_FLIGHT_NUMBER))
 
         adapter = FlickrImagesAdapter()
         viewBinding = FragmentLaunchDetailsPageBinding.inflate(inflater, container, false).apply {
